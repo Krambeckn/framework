@@ -19,8 +19,5 @@
         "netforcews/io": "dev-master",
         "netforcews/http": "dev-master"
 	},
-	"config": {
-		"preferred-install": "dist"
-	},
 	"minimum-stability": "dev"
 }
