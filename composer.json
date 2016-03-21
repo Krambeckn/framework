@@ -1,0 +1,26 @@
+{
+	"name": "netforcews/framework",
+	"description": "NetForce Framework by Laravel",
+	"keywords": ["framework","php","netforce","brunogoncalves","laravel"],
+	"license": "GPL v.3",
+    "authors": [
+        {
+            "name": "Bruno Gonçalves",
+            "email": "bugotech@gmail.com"
+        }
+    ],
+	"require": {
+        "laravel/framework": "5.2.*",
+        "davejamesmiller/laravel-breadcrumbs": "^3.0",
+
+        "netforcews/support": "dev-master",
+        "netforcews/validation": "dev-master",
+        "netforcews/database": "dev-master",
+        "netforcews/io": "dev-master",
+        "netforcews/http": "dev-master"
+	},
+	"config": {
+		"preferred-install": "dist"
+	},
+	"minimum-stability": "dev"
+}
