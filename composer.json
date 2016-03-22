@@ -1,9 +1,9 @@
 {
-	"name": "netforcews/framework",
-	"description": "NetForce Framework by Laravel",
-	"keywords": ["framework","php","netforce","brunogoncalves","laravel"],
-	"license": "GPL v.3",
-    "authors": [
+	"name"        : "netforcews/framework",
+	"description" : "NetForce Framework by Laravel",
+	"keywords"    : ["framework","php","netforce","brunogoncalves","laravel"],
+	"license"     : "GPL v.3",
+    "authors"     : [
         {
             "name": "Bruno Gonçalves",
             "email": "bugotech@gmail.com"
@@ -19,5 +19,13 @@
         "netforcews/io": "dev-master",
         "netforcews/http": "dev-master"
 	},
+
+    "autoload": {
+
+        "psr-4": {
+            "NetForceWS\\Framework\\": ""
+        }
+    },
+
 	"minimum-stability": "dev"
 }
