@@ -5,6 +5,7 @@ class FrameworkServiceProvider extends \Illuminate\Support\AggregateServiceProvi
     protected $providers = [
         'NetForceWS\Database\DatabaseServiceProvider',
         'NetForceWS\IO\IoServiceProvider',
+        'NetForceWS\Validation\ValidationServiceProvider',
 
         //'NetForce\Formatter\FormatterServiceProvider',
         //'NetForce\Compiler\CompilerServiceProvider',
