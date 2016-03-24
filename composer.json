@@ -11,14 +11,16 @@
     ],
 	"require": {
         "laravel/framework": "5.2.*",
-        "davejamesmiller/laravel-breadcrumbs": "^3.0",
-
-        "netforcews/support": "dev-master",
-        "netforcews/validation": "dev-master",
-        "netforcews/database": "dev-master",
-        "netforcews/io": "dev-master",
-        "netforcews/http": "dev-master"
+        "davejamesmiller/laravel-breadcrumbs": "^3.0"
 	},
+
+    "replace": {
+        "netforcews/support": "self.version",
+        "netforcews/validation": "self.version",
+        "netforcews/database": "self.version",
+        "netforcews/io": "self.version",
+        "netforcews/http": "self.version"
+    },
 
     "autoload": {
 
