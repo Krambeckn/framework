@@ -1,7 +1,7 @@
 {
     "name"       : "netforcews/framework",
     "description": "NetForce Framework by Laravel",
-    "keywords"   : ["framework", "php", "netforce", "brunogoncalves", "laravel"],
+    "keywords"   : ["framework", "php", "netforce", "laravel"],
     "license"    : "GPL v.3",
     "authors"    : [
         {
@@ -13,11 +13,11 @@
         "laravel/framework"                  : "5.2.*",
         "davejamesmiller/laravel-breadcrumbs": "^3.0",
 
-        "netforcews/support"   : "dev-master",
-        "netforcews/validation": "dev-master",
-        "netforcews/database"  : "dev-master",
-        "netforcews/io"        : "dev-master",
-        "netforcews/http"      : "dev-master"
+        "netforcews/support"   : "0.1.*",
+        "netforcews/validation": "0.1.*",
+        "netforcews/database"  : "0.1.*",
+        "netforcews/io"        : "0.1.*",
+        "netforcews/http"      : "0.1.*"
     },
 
     "autoload": {
@@ -25,7 +25,5 @@
         "psr-4": {
             "NetForceWS\\Framework\\": ""
         }
-    },
-
-    "minimum-stability": "dev"
+    }
 }
