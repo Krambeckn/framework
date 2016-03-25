@@ -43,4 +43,20 @@ class ArrPhpFileTest extends TestCase
         $this->assertArrayHasKey('dono', $this->config);
         $this->assertInternalType('array', $this->config['dono']);
     }
+
+    /**
+     * verificar se o key dono foi criado
+     */
+    public function testQualDono()
+    {
+        $dono = $this->config['dono'];
+
+        $this->assertArrayHasKey('nome', $dono);
+        $this->assertInternalType('string', $dono['nome']);
+        $this->assertEquals('bruno', $dono['nome']);
+
+        $this->assertArrayHasKey('site', $dono);
+        $this->assertInternalType('string', $dono['site']);
+        $this->assertEquals('www.netforce.com.br', $dono['site']);
+    }
 }
