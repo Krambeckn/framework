@@ -34,5 +34,7 @@
         "psr-4": {
             "NetForceWS\\Framework\\": ""
         }
-    }
+    },
+
+    "minimum-stability": "dev"
 }
