@@ -9,6 +9,6 @@ class ExampleTest extends TestCase
      */
     public function testOlaMundo()
     {
-        $this->assertTrue(true);
+        $this->assertTrue(false);
     }
 }
