@@ -34,7 +34,7 @@
     "autoload": {
 
         "psr-4": {
-            "NetForceWS\\": "src"
+            "NetForceWS\\": "src/"
         },
         "files": [
             "src/Support/helpers.php"
