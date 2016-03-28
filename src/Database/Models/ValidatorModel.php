@@ -1,4 +1,6 @@
-<?php namespace NetForceWS\Database\Models;
+<?php
+
+namespace NetForceWS\Database\Models;
 
 use NetForceWS\Support\ExceptionAttributes;
 
@@ -7,27 +9,29 @@ trait ValidatorModel
     public $validates = array();
 
     /**
-     * Registrar eventos
+     * Registrar eventos.
      */
     public static function bootValidatorModel()
     {
         // Validar
-        self::saving(function($model)
-        {
+        self::saving(function ($model) {
             $model->validate();
         }, 100);
     }
 
     /**
-     * Executar validacao no model
+     * Executar validacao no model.
+     *
      * @return bool
+     *
      * @throws \Exception
      */
     public function validate()
     {
         // Event: before validate
-        if ($this->fireModelEvent('validating') === false)
+        if ($this->fireModelEvent('validating') === false) {
             return false;
+        }
 
         // Validar regras
         $this->validateRules();
@@ -39,18 +43,21 @@ trait ValidatorModel
     }
 
     /**
-     * Executar validacao no model
+     * Executar validacao no model.
+     *
      * @return bool
+     *
      * @throws \Exception
      */
     private function validateRules()
     {
         // Verificar se foi definido alguma validacao
-        if (count($this->validates) == 0)
+        if (count($this->validates) == 0) {
             return true;
+        }
 
         // Carregar valores para validacao
-        $values          = $this->toArray();
+        $values = $this->toArray();
         $values['table'] = $this->table;
 
         // Carregar lista de regras com as variaveis
@@ -58,10 +65,9 @@ trait ValidatorModel
 
         // Processar regras
         $validator = app('validator')->make($values, $rules);
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             $messages = $validator->messages();
-            $items    = $messages->toArray();
+            $items = $messages->toArray();
 
             throw new ExceptionAttributes(app('translator')->get('Error validating fields.'), 0, $items);
         }
@@ -70,24 +76,24 @@ trait ValidatorModel
     }
 
     /**
-     * Retorna lista de regras para validacao com variaveis
+     * Retorna lista de regras para validacao com variaveis.
+     *
      * @param $values
+     *
      * @return array
      */
     private function getRules($values)
     {
         $rules = $this->validates;
-        $list  = [];
+        $list = [];
 
         // Tratar variaveis da regra
-        foreach ($rules as $field => $expr)
-        {
+        foreach ($rules as $field => $expr) {
             preg_match_all('/{([a-zA-Z0-9_]+)+}/', $expr, $vars, PREG_PATTERN_ORDER);
-            foreach ($vars[1] as $i => $var_id)
-            {
+            foreach ($vars[1] as $i => $var_id) {
                 $var_old = $vars[0][$i];
                 $var_new = array_key_exists($var_id, $values) ? $values[$var_id] : 'null';
-                $expr    = str_replace($var_old, $var_new, $expr);
+                $expr = str_replace($var_old, $var_new, $expr);
             }
 
             $list[$field] = $expr;
@@ -97,9 +103,10 @@ trait ValidatorModel
     }
 
     /**
-     * Registra o evento validating no dispatcher do model
+     * Registra o evento validating no dispatcher do model.
      *
-     * @param  \Closure|string  $callback
+     * @param  \Closure|string $callback
+     *
      * @return void
      */
     public static function validating($callback)
@@ -108,9 +115,10 @@ trait ValidatorModel
     }
 
     /**
-     * Registra o evento validating no dispatcher do model
+     * Registra o evento validating no dispatcher do model.
      *
-     * @param  \Closure|string  $callback
+     * @param  \Closure|string $callback
+     *
      * @return void
      */
     public static function validated($callback)

@@ -1,9 +1,12 @@
-<?php namespace NetForceWS\Database\Models;
+<?php
+
+namespace NetForceWS\Database\Models;
 
 trait HelpersModel
 {
     /**
-     * Return if is insert mode
+     * Return if is insert mode.
+     *
      * @return bool
      */
     public function isInsert()

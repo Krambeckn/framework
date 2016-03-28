@@ -2,9 +2,6 @@
 
 namespace NetForceWS\Database\Migration;
 
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
-
 class MigrateMakeCommand extends \Illuminate\Database\Console\Migrations\MigrateMakeCommand
 {
     protected $signature = 'make:migration {name : The name of the migration.}
@@ -48,7 +45,7 @@ class MigrateMakeCommand extends \Illuminate\Database\Console\Migrations\Migrate
 
     public function getStubPath()
     {
-        return __DIR__ . '/Templates';
+        return __DIR__.'/Templates';
     }
 
     protected function makeName($name, $path)
@@ -57,5 +54,4 @@ class MigrateMakeCommand extends \Illuminate\Database\Console\Migrations\Migrate
 
         return sprintf('%s/%s_%s.php', $path, $date, $name);
     }
-
 }

@@ -5,16 +5,17 @@ namespace NetForceWS\Database\Migration;
 class Migration extends \Illuminate\Database\Migrations\Migration
 {
     /**
-     * Executar seed
+     * Executar seed.
+     *
      * @param $class
      */
     protected function seed($class)
     {
-        \Artisan::call('db:seed', array('--class' => $class));
+        \Artisan::call('db:seed', ['--class' => $class]);
     }
 
     /**
-     * Executar migracao para atualizar versao
+     * Executar migracao para atualizar versao.
      */
     public function up()
     {
@@ -22,11 +23,10 @@ class Migration extends \Illuminate\Database\Migrations\Migration
     }
 
     /**
-     * Executar migracao para desinstalar versao
+     * Executar migracao para desinstalar versao.
      */
     public function down()
     {
         //...
     }
-
 }

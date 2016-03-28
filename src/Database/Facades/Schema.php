@@ -13,6 +13,7 @@ class Schema extends \Illuminate\Support\Facades\Facade
      * Get a schema builder instance for a connection.
      *
      * @param string $name
+     *
      * @return \NetForceWS\Database\Schema\Builder
      */
     public static function connection($name)
@@ -35,5 +36,4 @@ class Schema extends \Illuminate\Support\Facades\Facade
 
         return new Builder($con);
     }
-
 }

@@ -1,4 +1,6 @@
-<?php namespace NetForceWS\Database;
+<?php
+
+namespace NetForceWS\Database;
 
 class MigrationServiceProvider extends \Illuminate\Support\ServiceProvider
 {
@@ -16,10 +18,11 @@ class MigrationServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('command.migrate.make',    function($app) {
+        $this->app->singleton('command.migrate.make', function ($app) {
 
-            $creator  = $app['migration.creator'];
+            $creator = $app['migration.creator'];
             $composer = $app['composer'];
+
             return new \NetForceWS\Database\Migration\MigrateMakeCommand($creator, $composer);
         });
 

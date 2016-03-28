@@ -1,23 +1,23 @@
-<?php namespace NetForceWS\Database\Models;
+<?php
+
+namespace NetForceWS\Database\Models;
 
 trait FileModel
 {
     /**
-     * Registrar eventos
+     * Registrar eventos.
      */
     public static function bootFileModel()
     {
         // Excluir arquivos
-        self::deleting(function($model)
-        {
+        self::deleting(function ($model) {
             $casts = $model->getCasts();
-            foreach ($casts as $attr => $type)
-            {
-                if ($type == 'file')
-                {
+            foreach ($casts as $attr => $type) {
+                if ($type == 'file') {
                     $file = $model->{$attr};
-                    if (is_null($file) != true)
+                    if (is_null($file) != true) {
                         $file->delete();
+                    }
                 }
             }
 
@@ -25,18 +25,18 @@ trait FileModel
     }
 
     /**
-     * getAttribute
+     * getAttribute.
+     *
      * @param $key
+     *
      * @return FileModel
      */
     public function getAttribute($key)
     {
         // verificar se deve autocarregar FileModel quando o attribute não foi informado
         // Isso é não não retornar null quando não tem os attributos
-        if (!(array_key_exists($key, $this->attributes) || $this->hasGetMutator($key)))
-        {
-            if (array_key_exists($key, $this->casts) && ($this->casts[$key] == 'file'))
-            {
+        if (!(array_key_exists($key, $this->attributes) || $this->hasGetMutator($key))) {
+            if (array_key_exists($key, $this->casts) && ($this->casts[$key] == 'file')) {
                 return new \NetForce\Models\Relations\FileModel($this, $key);
             }
         }

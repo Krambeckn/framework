@@ -1,18 +1,24 @@
-<?php namespace NetForceWS\Database\Models;
+<?php
+
+namespace NetForceWS\Database\Models;
 
 use NetForceWS\Database\Models\Relations\FileModel;
 
 trait CastModel
 {
     /**
-     * Retorna o tipo de campo
+     * Retorna o tipo de campo.
+     *
      * @param $key
+     *
      * @return string
      */
     public function getAttrCast($key)
     {
-        if (array_key_exists($key, $this->casts))
+        if (array_key_exists($key, $this->casts)) {
             return $this->getCastType($key);
+        }
+
         return 'string';
     }
 
@@ -26,12 +32,13 @@ trait CastModel
 
     protected function castAttribute($key, $value)
     {
-        switch ($this->getCastType($key))
-        {
+        switch ($this->getCastType($key)) {
             case 'file':
                 $file = new FileModel($this, $key);
-                if (is_null($value) != true)
+                if (is_null($value) != true) {
                     $file->associate($value);
+                }
+
                 return $file;
 
             default:
