@@ -1,0 +1,29 @@
+{
+	"name"        : "netforcews/support",
+	"description" : "The netforcews Support package.",
+    "homepage"    : "http://netforcews.com",
+	"license"     : "GPL v.3",
+
+    "authors": [
+        {
+            "name": "Bruno Gonçalves",
+            "email": "bugotech@gmail.com"
+        }
+    ],
+
+	"require": {
+        "php": ">=5.5.9",
+        "illuminate/support": "5.2.*"
+	},
+
+	"autoload": {
+        "psr-4": {
+            "NetForceWS\\Support\\": ""
+        },
+        "files": [
+            "helpers.php"
+        ]
+	},
+
+    "minimum-stability": "dev"
+}

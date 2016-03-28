@@ -11,13 +11,15 @@
     ],
     "require"    : {
         "laravel/framework"                  : "5.2.*",
-        "davejamesmiller/laravel-breadcrumbs": "^3.0",
+        "davejamesmiller/laravel-breadcrumbs": "^3.0"
+    },
 
-        "netforcews/support"   : "0.1.*",
-        "netforcews/validation": "0.1.*",
-        "netforcews/database"  : "0.1.*",
-        "netforcews/io"        : "0.1.*",
-        "netforcews/http"      : "0.1.*"
+    "replace": {
+        "netforcews/support"   : "self.version",
+        "netforcews/validation": "self.version",
+        "netforcews/database"  : "self.version",
+        "netforcews/io"        : "self.version",
+        "netforcews/http"      : "self.version"
     },
 
     "require-dev": {
@@ -32,8 +34,11 @@
     "autoload": {
 
         "psr-4": {
-            "NetForceWS\\Framework\\": ""
-        }
+            "NetForceWS\\": "src"
+        },
+        "files": [
+            "src/Support/helpers.php"
+        ]
     },
 
     "minimum-stability": "dev"

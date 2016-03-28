@@ -1,0 +1,31 @@
+<?php
+
+use NetForceWS\Database\Schema\Table;
+
+class {{class}} extends \NetForceWS\Database\Migration\Migration
+{
+
+	/**
+	 * Executar migracao
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
+		Schema::create('{{table}}', function(Table $table)
+		{
+			$table->key();
+			$table->timestamps();
+		});
+	}
+
+	/**
+	 * Reverter migracao
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+		Schema::drop('{{table}}');
+	}
+}

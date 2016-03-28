@@ -1,0 +1,25 @@
+{
+	"name"        : "netforcews/validation",
+	"description" : "The netforcews Validation package.",
+    "homepage"    : "http://netforcews.com",
+	"license"     : "GPL v.3",
+    "authors": [
+        {
+            "name": "Bruno Gonçalves",
+            "email": "bugotech@gmail.com"
+        }
+    ],
+
+    "require": {
+        "netforcews/support": "0.1.*",
+        "illuminate/validation": "5.2.*"
+    },
+
+	"autoload": {
+        "psr-4": {
+            "NetForceWS\\Validation\\": ""
+        }
+	},
+
+	"minimum-stability": "dev"
+}

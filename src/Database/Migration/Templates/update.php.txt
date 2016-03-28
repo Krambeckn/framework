@@ -1,0 +1,33 @@
+<?php
+
+use NetForceWS\Database\Schema\Table;
+
+class {{class}} extends \NetForceWS\Database\Migration\Migration
+{
+
+	/**
+	 * Executar migracao
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
+		Schema::table('{{table}}', function(Table $table)
+		{
+
+		});
+	}
+
+	/**
+	 * Reverter migracao
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+		Schema::table('{{table}}', function(Table $table)
+		{
+
+		});
+	}
+}

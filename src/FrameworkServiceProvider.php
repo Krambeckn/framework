@@ -1,4 +1,4 @@
-<?php namespace NetForceWS\Framework;
+<?php namespace NetForceWS;
 
 class FrameworkServiceProvider extends \Illuminate\Support\AggregateServiceProvider
 {
