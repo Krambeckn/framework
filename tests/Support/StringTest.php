@@ -33,4 +33,9 @@ class StringTest extends TestCase
         $str = Str::last('NetForce/Sistemas/Ultima');
         $this->assertEquals('Ultima', $str);
     }
+
+    public function testComErro()
+    {
+        $this->assertTrue(false);
+    }
 }
