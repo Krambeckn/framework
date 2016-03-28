@@ -1,4 +1,6 @@
-<?php namespace NetForceWS\Database\Migration;
+<?php
+
+namespace NetForceWS\Database\Migration;
 
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
@@ -14,10 +16,10 @@ class MigrateMakeCommand extends \Illuminate\Database\Console\Migrations\Migrate
     protected function writeMigration($name, $table, $create)
     {
         $with_prefix = ($this->input->getOption('no-prefix') === false);
-        $name        = $with_prefix ? sprintf('migration_%s', $name) : $name;
-        $path        = $this->getMigrationPath();
-        $target      = $this->makeName($name, $path);
-        $class       = studly_case($name);
+        $name = $with_prefix ? sprintf('migration_%s', $name) : $name;
+        $path = $this->getMigrationPath();
+        $target = $this->makeName($name, $path);
+        $class = studly_case($name);
 
         $t = new \NetForceWS\IO\Template();
         $t->file($this->getStub($table, $create), $target);
@@ -33,11 +35,13 @@ class MigrateMakeCommand extends \Illuminate\Database\Console\Migrations\Migrate
 
     protected function getStub($table, $create)
     {
-        if (is_null($table))
+        if (is_null($table)) {
             return \File::combine($this->getStubPath(), 'blank.php.txt');
+        }
 
-        if ($create)
+        if ($create) {
             return \File::combine($this->getStubPath(), 'create.php.txt');
+        }
 
         return \File::combine($this->getStubPath(), 'update.php.txt');
     }
@@ -50,6 +54,8 @@ class MigrateMakeCommand extends \Illuminate\Database\Console\Migrations\Migrate
     protected function makeName($name, $path)
     {
         $date = date('Y_m_d_His');
+
         return sprintf('%s/%s_%s.php', $path, $date, $name);
     }
+
 }
