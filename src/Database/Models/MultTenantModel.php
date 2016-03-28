@@ -2,8 +2,8 @@
 
 namespace NetForceWS\Database\Models;
 
-use \NetForceWS\Database\Schema\Table;
-use \NetForceWS\Database\Models\Scopes\TenantScope;
+use NetForceWS\Database\Schema\Table;
+use NetForceWS\Database\Models\Scopes\TenantScope;
 
 trait MultTenantModel
 {
@@ -22,7 +22,7 @@ trait MultTenantModel
             if (isset($model->multTenant) && ($model->multTenant == true)) {
                 // Verificar se inquilino já foi informado
                 if (array_key_exists(Table::tenantField(), $model->attributes)) {
-                    return null;
+                    return;
                 }
 
                 // Verificar se usuário esta logado
@@ -33,8 +33,6 @@ trait MultTenantModel
                 // Setar inquilino
                 $model->{Table::tenantField()} = \Auth::user()->{Table::tenantField()};
             }
-
-            return null;
         });
     }
 }
