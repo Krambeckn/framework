@@ -1,10 +1,12 @@
-<?php namespace NetForceWS\Database\Schema\Grammars;
+<?php
 
+namespace NetForceWS\Database\Schema\Grammars;
 
 class MySqlGrammar extends \Illuminate\Database\Schema\Grammars\MySqlGrammar
 {
     /**
-     * Determina se schema/database existe
+     * Determina se schema/database existe.
+     *
      * @return string
      */
     public function compileSchemaExists()
@@ -13,7 +15,8 @@ class MySqlGrammar extends \Illuminate\Database\Schema\Grammars\MySqlGrammar
     }
 
     /**
-     * Determina se visao existe
+     * Determina se visao existe.
+     *
      * @return string
      */
     public function compileViewExists()
@@ -22,7 +25,8 @@ class MySqlGrammar extends \Illuminate\Database\Schema\Grammars\MySqlGrammar
     }
 
     /**
-     * Determina se user existe
+     * Determina se user existe.
+     *
      * @return string
      */
     public function compileUserExists()
@@ -31,7 +35,8 @@ class MySqlGrammar extends \Illuminate\Database\Schema\Grammars\MySqlGrammar
     }
 
     /**
-     * Criar usuario
+     * Criar usuario.
+     *
      * @return string
      */
     public function compileUserCreate($database, $user, $pass, $local = '%')
@@ -40,7 +45,8 @@ class MySqlGrammar extends \Illuminate\Database\Schema\Grammars\MySqlGrammar
     }
 
     /**
-     * Excluir usuario
+     * Excluir usuario.
+     *
      * @return string
      */
     public function compileUserDrop($user, $local = '%')
@@ -49,12 +55,13 @@ class MySqlGrammar extends \Illuminate\Database\Schema\Grammars\MySqlGrammar
     }
 
     /**
-     * Retornar informacoes de uma tabela
+     * Retornar informacoes de uma tabela.
+     *
      * @return string
      */
     public function compileGetTable()
     {
-        $sql  = "select table_name, engine, table_type";
+        $sql = "select table_name, engine, table_type";
         $sql .= " from information_schema.tables";
         $sql .= " where (table_schema = ?)";
         $sql .= " and (table_name = ?)";
@@ -64,12 +71,13 @@ class MySqlGrammar extends \Illuminate\Database\Schema\Grammars\MySqlGrammar
     }
 
     /**
-     * Retorna lista de campos de uma tabela
+     * Retorna lista de campos de uma tabela.
+     *
      * @return string
      */
     public function compileGetColumns()
     {
-        $sql  = "select table_name, column_name, ordinal_position, is_nullable, data_type, character_maximum_length, column_comment";
+        $sql = "select table_name, column_name, ordinal_position, is_nullable, data_type, character_maximum_length, column_comment";
         $sql .= " from information_schema.columns";
         $sql .= " where (table_schema = ?) and (table_name = ?)";
         $sql .= " order by ordinal_position";
@@ -78,7 +86,8 @@ class MySqlGrammar extends \Illuminate\Database\Schema\Grammars\MySqlGrammar
     }
 
     /**
-     * Criar visao
+     * Criar visao.
+     *
      * @return string
      */
     public function compileCreateView($name, $sql)
@@ -87,7 +96,8 @@ class MySqlGrammar extends \Illuminate\Database\Schema\Grammars\MySqlGrammar
     }
 
     /**
-     * Excluir visao
+     * Excluir visao.
+     *
      * @return string
      */
     public function compileDropView($name)
@@ -96,27 +106,31 @@ class MySqlGrammar extends \Illuminate\Database\Schema\Grammars\MySqlGrammar
     }
 
     /**
-     * Montar select para view de tabelas multi-inquilino
+     * Montar select para view de tabelas multi-inquilino.
+     *
      * @return string
      */
     public function compileSelectViewTenant($columns, $table, $column_tenant)
     {
-        $sql  = "select " . $columns . " from " . $table;
+        $sql = "select " . $columns . " from " . $table;
         $sql .= " where (" . $column_tenant . " = substring_index(user(), '@', 1))";
+
         return $sql;
     }
 
     /**
-     * Criar trigger
+     * Criar trigger.
+     *
      * @param $table
+     *
      * @return string
      */
     public function compileCreateTriggerTenant($table, $column_tenant)
     {
         $trigger = sprintf('%s_tg', $table);
-        $table   = sprintf('%s_tb', $table);
+        $table = sprintf('%s_tb', $table);
 
-        $sql  = "create trigger " . $trigger;
+        $sql = "create trigger " . $trigger;
         $sql .= " before insert on " . $table;
         $sql .= " for each row set new." . $column_tenant . " = if ((new." . $column_tenant . " is null) or (new." . $column_tenant . " = ''), substring_index(user(), '@', 1), new." . $column_tenant . ")";
 

@@ -1,4 +1,6 @@
-<?php namespace NetForceWS\Database\Schema;
+<?php
+
+namespace NetForceWS\Database\Schema;
 
 use Closure;
 use Illuminate\Database\Connection;
@@ -9,18 +11,20 @@ class Builder extends \Illuminate\Database\Schema\MySqlBuilder
     /**
      * Create a new database Schema manager.
      *
-     * @param  \Illuminate\Database\Connection  $connection
+     * @param  \Illuminate\Database\Connection $connection
+     *
      * @return void
      */
     public function __construct(Connection $connection)
     {
         $this->connection = $connection;
-        $this->grammar    = new MySqlGrammar();
+        $this->grammar = new MySqlGrammar();
     }
 
     /**
      * @param string $table
      * @param callable $callback
+     *
      * @return \Illuminate\Database\Schema\Blueprint|mixed|Table
      */
     protected function createBlueprint($table, \Closure $callback = null)
@@ -32,11 +36,11 @@ class Builder extends \Illuminate\Database\Schema\MySqlBuilder
     }
 
     /**
-     * Criar tabela
+     * Criar tabela.
      */
     public function create($table, \Closure $callback)
     {
-        $blueprint    = $this->createBlueprint($table);
+        $blueprint = $this->createBlueprint($table);
 
         // Definir InnoDB como padrao
         $blueprint->create();
@@ -48,7 +52,7 @@ class Builder extends \Illuminate\Database\Schema\MySqlBuilder
     }
 
     /**
-     * Excluir tabela
+     * Excluir tabela.
      */
     public function drop($table)
     {
@@ -57,9 +61,10 @@ class Builder extends \Illuminate\Database\Schema\MySqlBuilder
     }
 
     /**
-     * Retorna se um database/schema existe
+     * Retorna se um database/schema existe.
      *
-     * @param  string  $table
+     * @param  string $table
+     *
      * @return bool
      */
     public function hasSchema($schema)
@@ -69,42 +74,45 @@ class Builder extends \Illuminate\Database\Schema\MySqlBuilder
     }
 
     /**
-     * Retorna informações da definição da tabela (estrutura)
+     * Retorna informações da definição da tabela (estrutura).
+     *
      * @param $table
+     *
      * @return bool|\stdClass
      */
     public function getTable($table)
     {
-        $sql      = $this->grammar->compileGetTable();
+        $sql = $this->grammar->compileGetTable();
         $database = $this->connection->getDatabaseName();
-        $table    = $this->connection->getTablePrefix() . $table;
+        $table = $this->connection->getTablePrefix() . $table;
 
-        if (!($row = $this->connection->selectOne($sql, [$database, $table])))
+        if (!($row = $this->connection->selectOne($sql, [$database, $table]))) {
             return false;
+        }
 
-        $row->engine     = (strtoupper($row->engine) == 'MEMORY') ? TableInfo::Memory : TableInfo::Storage;
+        $row->engine = (strtoupper($row->engine) == 'MEMORY') ? TableInfo::Memory : TableInfo::Storage;
         $row->table_type = strtoupper($row->table_type);
 
         return new TableInfo($this, $table, $row->engine);
     }
 
     /**
-     * Retorna a lista de campos de uma tabela
+     * Retorna a lista de campos de uma tabela.
+     *
      * @param $table
+     *
      * @return array
      */
     public function getColumns($table, $filterFields = false)
     {
-        $sql          = $this->grammar->compileGetColumns();
-        $database     = $this->connection->getDatabaseName();
-        $table        = $this->connection->getTablePrefix() . $table;
-        $list         = array();
+        $sql = $this->grammar->compileGetColumns();
+        $database = $this->connection->getDatabaseName();
+        $table = $this->connection->getTablePrefix() . $table;
+        $list = array();
 
         $columns = $this->connection->select($sql, [$database, $table]);
-        foreach ($columns as $col)
-        {
-            if ((is_array($filterFields) && in_array('', $filterFields)) || ($filterFields === false))
-            {
+        foreach ($columns as $col) {
+            if ((is_array($filterFields) && in_array('', $filterFields)) || ($filterFields === false)) {
                 $fld = new FieldInfo(trim($col->table_name), trim($col->column_name), trim($col->column_comment));
                 $list[$fld->name] = $fld;
             }

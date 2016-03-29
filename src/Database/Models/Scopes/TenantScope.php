@@ -1,8 +1,10 @@
-<?php namespace NetForceWS\Database\Models\Scopes;
+<?php
 
-use \Illuminate\Database\Eloquent\Builder;
-use \Illuminate\Database\Eloquent\Model;
-use \NetForceWS\Database\Schema\Table;
+namespace NetForceWS\Database\Models\Scopes;
+
+use NetForceWS\Database\Schema\Table;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class TenantScope implements \Illuminate\Database\Eloquent\Scope
 {
@@ -18,7 +20,8 @@ class TenantScope implements \Illuminate\Database\Eloquent\Scope
     }
 
     /**
-     * Aplicar
+     * Aplicar.
+     *
      * @param Builder $builder
      * @param Model $model
      */

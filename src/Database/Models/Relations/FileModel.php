@@ -2,8 +2,8 @@
 
 namespace NetForceWS\Database\Models\Relations;
 
-use \Storage;
 use \File;
+use \Storage;
 
 class FileModel
 {
@@ -65,7 +65,6 @@ class FileModel
      * Enviar arquivo para o storage no save do model.
      *
      * @param $path
-     *
      * @param bool $originalName
      */
     public function attachInSave($path, $originalName = false)
@@ -256,6 +255,7 @@ class FileModel
         }
 
         $code = base64_encode(File::get($path));
+
         return sprintf('data:image/%s;base64,%s', File::extension($path), $code);
     }
 

@@ -2,8 +2,8 @@
 
 namespace NetForceWS\Database\Models;
 
-use NetForceWS\Database\Schema\Table;
 use NetForceWS\Database\Models\Scopes\TenantScope;
+use NetForceWS\Database\Schema\Table;
 
 trait MultTenantModel
 {

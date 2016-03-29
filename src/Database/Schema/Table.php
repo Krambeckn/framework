@@ -1,19 +1,21 @@
-<?php namespace NetForceWS\Database\Schema;
+<?php
+
+namespace NetForceWS\Database\Schema;
 
 class Table extends \Illuminate\Database\Schema\Blueprint
 {
-    const Key         = 'key';
-    const String      = 'string';
-    const Extend      = 'extend';
-    const Integer     = 'integer';
-    const Number      = 'number';
-    const Boolean     = 'boolean';
-    const Datetime    = 'datetime';
-    const Date        = 'date';
-    const Time        = 'time';
-    const Text        = 'text';
+    const Key = 'key';
+    const String = 'string';
+    const Extend = 'extend';
+    const Integer = 'integer';
+    const Number = 'number';
+    const Boolean = 'boolean';
+    const Datetime = 'datetime';
+    const Date = 'date';
+    const Time = 'time';
+    const Text = 'text';
     const Association = 'association';
-    const Options     = 'options';
+    const Options = 'options';
 
     /**
      * @var Builder
@@ -21,7 +23,8 @@ class Table extends \Illuminate\Database\Schema\Blueprint
     protected $builder;
 
     /**
-     * Flag se estrutura tem controle de inquilinos
+     * Flag se estrutura tem controle de inquilinos.
+     *
      * @var bool
      */
     protected $enabledTenant = null;
@@ -34,13 +37,13 @@ class Table extends \Illuminate\Database\Schema\Blueprint
      */
     public function __construct(Builder $builder, $table, \Closure $callback = null)
     {
-        $this->builder    = $builder;
-        $this->table      = $table;
+        $this->builder = $builder;
+        $this->table = $table;
         parent::__construct($table, $callback);
     }
 
     /**
-     * Criar campo primario padrao
+     * Criar campo primario padrao.
      */
     public function key()
     {
@@ -50,7 +53,7 @@ class Table extends \Illuminate\Database\Schema\Blueprint
     }
 
     /**
-     * Criar campo primario padrao
+     * Criar campo primario padrao.
      */
     public function uniqueKey($column, $length = 255)
     {
@@ -61,7 +64,7 @@ class Table extends \Illuminate\Database\Schema\Blueprint
     }
 
     /**
-     * Campo de extensao
+     * Campo de extensao.
      */
     public function extend($table)
     {
@@ -82,7 +85,7 @@ class Table extends \Illuminate\Database\Schema\Blueprint
     }
 
     /**
-     * Campo String (varchar)
+     * Campo String (varchar).
      */
     public function string($column, $length = 255)
     {
@@ -93,7 +96,7 @@ class Table extends \Illuminate\Database\Schema\Blueprint
     }
 
     /**
-     * Campo Inteiro
+     * Campo Inteiro.
      */
     public function integer($column, $unsigned = false, $autoIncrement = false)
     {
@@ -104,7 +107,7 @@ class Table extends \Illuminate\Database\Schema\Blueprint
     }
 
     /**
-     * Campo Numero
+     * Campo Numero.
      */
     public function number($column, $total = 20, $places = 5)
     {
@@ -115,7 +118,7 @@ class Table extends \Illuminate\Database\Schema\Blueprint
     }
 
     /**
-     * Campo Logico
+     * Campo Logico.
      */
     public function boolean($column)
     {
@@ -126,7 +129,7 @@ class Table extends \Illuminate\Database\Schema\Blueprint
     }
 
     /**
-     * Campo DATA e HORA
+     * Campo DATA e HORA.
      */
     public function dateTime($column)
     {
@@ -137,7 +140,7 @@ class Table extends \Illuminate\Database\Schema\Blueprint
     }
 
     /**
-     * Campo DATA
+     * Campo DATA.
      */
     public function date($column)
     {
@@ -148,7 +151,7 @@ class Table extends \Illuminate\Database\Schema\Blueprint
     }
 
     /**
-     * Campo HORA
+     * Campo HORA.
      */
     public function time($column)
     {
@@ -159,7 +162,7 @@ class Table extends \Illuminate\Database\Schema\Blueprint
     }
 
     /**
-     * Campo TEXTO
+     * Campo TEXTO.
      */
     public function text($column)
     {
@@ -170,13 +173,14 @@ class Table extends \Illuminate\Database\Schema\Blueprint
     }
 
     /**
-     * Campo de associacao (Lookup)
+     * Campo de associacao (Lookup).
      */
     public function association($column, $table)
     {
         // Verificar se deve adicionar o sufixo
-        if (ForeignKey::isAssociation($column) != true)
+        if (ForeignKey::isAssociation($column) != true) {
             $column = sprintf('%s_%s', strtolower($column), self::keyAttr());
+        }
 
         // Carregar informacao da tabela
         $table = $this->builder->getTable($table);
@@ -196,14 +200,14 @@ class Table extends \Illuminate\Database\Schema\Blueprint
     }
 
     /**
-     * Campos quando tabela mult-tenant
+     * Campos quando tabela mult-tenant.
+     *
      * @return \Illuminate\Support\Fluent
      */
     public function tenant($ignore = true)
     {
         // Verificar se tabela de inquilino foi criada
-        if ($this->enabledTenant() != true)
-        {
+        if ($this->enabledTenant() != true) {
             if ($ignore)
                 return new \Illuminate\Support\Fluent();
             error('Not enabled multi tenant control');
@@ -214,7 +218,7 @@ class Table extends \Illuminate\Database\Schema\Blueprint
     }
 
     /**
-     * Campo LISTA
+     * Campo LISTA.
      */
     public function options($column)
     {
@@ -225,40 +229,45 @@ class Table extends \Illuminate\Database\Schema\Blueprint
     }
 
     /**
-     * Excluir campo
+     * Excluir campo.
      *
-     * @param  string|array  $columns
+     * @param  string|array $columns
+     *
      * @return \Illuminate\Support\Fluent
      */
     public function dropColumn($columns)
     {
-        $columns = is_array($columns) ? $columns : (array) func_get_args();
+        $columns = is_array($columns) ? $columns : (array)func_get_args();
 
         // Verificar se deve excluir constrain dos campos lookups antes
-        foreach ($columns as $column)
-        {
-            if (ForeignKey::isAssociation($column))
+        foreach ($columns as $column) {
+            if (ForeignKey::isAssociation($column)) {
                 parent::dropForeign(ForeignKey::makeName($this->table, $column));
+            }
         }
 
         return parent::dropColumn($columns);
     }
 
     /**
-     * Set type field in comment
+     * Set type field in comment.
+     *
      * @param \Illuminate\Support\Fluent $column
      * @param $name
      * @param $type
+     *
      * @return \Illuminate\Support\Fluent $column
      */
     protected function setTypeColumn(\Illuminate\Support\Fluent $column, $name, $type)
     {
         $column->comment($type);
+
         return $column;
     }
 
     /**
-     * Nome do atributo KEY
+     * Nome do atributo KEY.
+     *
      * @return string
      */
     public static function keyAttr()
@@ -267,7 +276,8 @@ class Table extends \Illuminate\Database\Schema\Blueprint
     }
 
     /**
-     * Nome da tabela de inquilinos
+     * Nome da tabela de inquilinos.
+     *
      * @return string
      */
     public static function tenantTable()
@@ -276,7 +286,8 @@ class Table extends \Illuminate\Database\Schema\Blueprint
     }
 
     /**
-     * Nome do atributo inquilino
+     * Nome do atributo inquilino.
+     *
      * @return string
      */
     public static function tenantAttr()
@@ -285,7 +296,8 @@ class Table extends \Illuminate\Database\Schema\Blueprint
     }
 
     /**
-     * Nome do campo inquilino na tabela
+     * Nome do campo inquilino na tabela.
+     *
      * @return string
      */
     public static function tenantField()
@@ -294,13 +306,16 @@ class Table extends \Illuminate\Database\Schema\Blueprint
     }
 
     /**
-     * Verificar se tem controle de inquilino
+     * Verificar se tem controle de inquilino.
+     *
      * @return bool
      */
     public function enabledTenant()
     {
-        if (is_null($this->enabledTenant) != true)
+        if (is_null($this->enabledTenant) != true) {
             return ($this->enabledTenant == true);
+        }
+
         return $this->enabledTenant = $this->builder->hasTable(self::tenantTable());
     }
 }

@@ -56,6 +56,7 @@ class Rest
             foreach ($name as $n => $v) {
                 $this->header($n, $v);
             }
+
             return $this;
         }
 

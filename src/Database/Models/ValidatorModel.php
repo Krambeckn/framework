@@ -6,7 +6,7 @@ use NetForceWS\Support\ExceptionAttributes;
 
 trait ValidatorModel
 {
-    public $validates = array();
+    public $validates = [];
 
     /**
      * Registrar eventos.
@@ -22,9 +22,9 @@ trait ValidatorModel
     /**
      * Executar validacao no model.
      *
-     * @return bool
-     *
      * @throws \Exception
+     *
+     * @return bool
      */
     public function validate()
     {
@@ -45,9 +45,9 @@ trait ValidatorModel
     /**
      * Executar validacao no model.
      *
-     * @return bool
-     *
      * @throws \Exception
+     *
+     * @return bool
      */
     private function validateRules()
     {
@@ -105,7 +105,7 @@ trait ValidatorModel
     /**
      * Registra o evento validating no dispatcher do model.
      *
-     * @param  \Closure|string $callback
+     * @param \Closure|string $callback
      *
      * @return void
      */
