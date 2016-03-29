@@ -14,6 +14,7 @@ class RouteUtils
         $route = ($name === null) ? Route::current() : Route::getRoutes()->getByName($name);
         $last = Str::last(Str::before($route->uri()));
         $id_name = Str::startsWith($last, '{') ? str_replace(['{', '}'], '', $last) : sprintf('%s_id', $last);
+
         return Route::input($id_name);
     }
 

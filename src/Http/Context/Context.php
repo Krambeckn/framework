@@ -76,7 +76,6 @@ class Context
         unset($this->properties['pageNext']);
     }
 
-
     /**
      * Paginas conforma o numero de registros e o pageSize.
      *
@@ -105,7 +104,7 @@ class Context
             $p->label = $i;
             $p->index = count($pages);
             $p->active = ($this->page == $i);
-            $p->href = $this->url('', array('page' => $i));
+            $p->href = $this->url('', ['page' => $i]);
             $pages[] = $p;
         }
 
@@ -260,7 +259,7 @@ class Context
      */
     public function getSearchUrlAttribute()
     {
-        return $this->url('', array('page' => 1, 'page_size' => $this->pageSize));
+        return $this->url('', ['page' => 1, 'page_size' => $this->pageSize]);
     }
 
     /**
@@ -268,7 +267,7 @@ class Context
      */
     protected function url($part, $params = false, $extend = true)
     {
-        $params = (($params === false) ? array() : $params);
+        $params = (($params === false) ? [] : $params);
         $params = ($extend ? array_merge($this->request->all(), $params) : $params);
 
         $url = (($part != '') ? $this->files->combine($this->uri, $part) : $this->uri);

@@ -29,10 +29,11 @@ trait Error
 
         // Verificar se já eh um HttpResponseException
         if (is_a($exception, '\Illuminate\Http\Exception\HttpResponseException')) {
-            if ($json != true)
+            if ($json != true) {
                 throw $exception;
-            else
+            } else {
                 $error->attrs = json_decode($exception->getResponse()->getContent(), true);
+            }
         }
 
         // Verificar se um erro de validacao
@@ -54,8 +55,9 @@ trait Error
         }
 
         // Verificar se deve retornar em formato JSON
-        if ($json)
+        if ($json) {
             return response()->json($error, 200, [], JSON_UNESCAPED_UNICODE);
+        }
 
         // Gerar erro
         $request = app('request');

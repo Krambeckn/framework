@@ -301,7 +301,7 @@ trait ResourceController
     /**
      * Retorna o ID pela rota.
      *
-     * @return integer
+     * @return int
      */
     public function getRouteId()
     {

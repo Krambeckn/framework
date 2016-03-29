@@ -114,8 +114,9 @@ class ServiceModel
     {
         // Verificar "multassociations" para zerar
         foreach ($model->getCasts() as $key => $type) {
-            if ($type == 'multassociations')
+            if ($type == 'multassociations') {
                 $model->$key()->sync([], true);
+            }
         }
 
         // Excluir
@@ -258,7 +259,7 @@ class ServiceModel
         $model->saving(function ($obj) use ($name, $value, $request) {
             if (($value instanceof UploadedFile) && $request->hasFile($name)) {
                 $obj->{$name} = $value->getClientOriginalName();
-            } else if (is_string($value)) {
+            } elseif (is_string($value)) {
                 $obj->{$name} = $value;
             }
         });

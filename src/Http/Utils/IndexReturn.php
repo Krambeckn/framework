@@ -44,8 +44,9 @@ class IndexReturn
      */
     public function data()
     {
-        if (is_null($this->data) != true)
+        if (is_null($this->data) != true) {
             return $this->data;
+        }
 
         return $this->data = $this->query->get();
     }
