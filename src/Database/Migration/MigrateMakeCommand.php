@@ -43,7 +43,7 @@ class MigrateMakeCommand extends \Illuminate\Database\Console\Migrations\Migrate
 
     public function getStubPath()
     {
-        return __DIR__.'/Templates';
+        return __DIR__ . '/Templates';
     }
 
     protected function makeName($name, $path)

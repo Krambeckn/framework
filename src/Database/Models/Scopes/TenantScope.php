@@ -11,7 +11,6 @@ class TenantScope implements \Illuminate\Database\Eloquent\Scope
      */
     protected $inquilino_id = null;
 
-
     public function __construct()
     {
         $this->inquilino_id = (\Auth::check() ? \Auth::user()->{Table::tenantField()} : null);

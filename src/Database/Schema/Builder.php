@@ -27,10 +27,11 @@ class Builder extends \Illuminate\Database\Schema\MySqlBuilder
      */
     protected function createBlueprint($table, Closure $callback = null)
     {
-        if (isset($this->resolver))
+        if (isset($this->resolver)) {
             return call_user_func($this->resolver, $table, $callback);
-        else
+        } else {
             return new Table($this, $table, $callback);
+        }
     }
 
     /**
@@ -68,6 +69,7 @@ class Builder extends \Illuminate\Database\Schema\MySqlBuilder
     public function hasSchema($schema)
     {
         $sql = $this->grammar->compileSchemaExists();
+
         return count($this->connection->select($sql, [$schema])) > 0;
     }
 
@@ -106,7 +108,7 @@ class Builder extends \Illuminate\Database\Schema\MySqlBuilder
         $sql = $this->grammar->compileGetColumns();
         $database = $this->connection->getDatabaseName();
         $table = $this->connection->getTablePrefix() . $table;
-        $list = array();
+        $list = [];
 
         $columns = $this->connection->select($sql, [$database, $table]);
         foreach ($columns as $col) {

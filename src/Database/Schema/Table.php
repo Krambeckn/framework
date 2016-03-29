@@ -206,8 +206,9 @@ class Table extends \Illuminate\Database\Schema\Blueprint
     {
         // Verificar se tabela de inquilino foi criada
         if ($this->enabledTenant() != true) {
-            if ($ignore)
+            if ($ignore) {
                 return new \Illuminate\Support\Fluent();
+            }
             error('Not enabled multi tenant control');
         }
 
@@ -235,7 +236,7 @@ class Table extends \Illuminate\Database\Schema\Blueprint
      */
     public function dropColumn($columns)
     {
-        $columns = is_array($columns) ? $columns : (array)func_get_args();
+        $columns = is_array($columns) ? $columns : (array) func_get_args();
 
         // Verificar se deve excluir constrain dos campos lookups antes
         foreach ($columns as $column) {
@@ -311,7 +312,7 @@ class Table extends \Illuminate\Database\Schema\Blueprint
     public function enabledTenant()
     {
         if (is_null($this->enabledTenant) != true) {
-            return ($this->enabledTenant == true);
+            return $this->enabledTenant == true;
         }
 
         return $this->enabledTenant = $this->builder->hasTable(self::tenantTable());

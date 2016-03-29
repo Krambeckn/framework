@@ -11,19 +11,19 @@ class TableInfo
     protected $builder = null;
 
     /**
-     * Flag se tabela eh mult-inquilina
+     * Flag se tabela eh mult-inquilina.
      * @var bool|null
      */
     protected $multTenant = null;
 
     /**
-     * Nome da tabela
+     * Nome da tabela.
      * @var string
      */
     public $name = '';
 
     /**
-     * Tipo de armazenamento
+     * Tipo de armazenamento.
      * @var string
      */
     public $type = '';
@@ -43,8 +43,10 @@ class TableInfo
      */
     public function isMultTenant()
     {
-        if ($this->multTenant !== null)
+        if ($this->multTenant !== null) {
             return ($this->multTenant == true);
+        }
+
         return $this->multTenant = $this->builder->hasColumn($this->name, Table::tenantField());
     }
 }

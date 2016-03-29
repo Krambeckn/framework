@@ -9,7 +9,7 @@ class MySqlGrammar extends \Illuminate\Database\Schema\Grammars\MySqlGrammar
      */
     public function compileSchemaExists()
     {
-        return "select * from information_schema.schemadata where (schema_name = ?)";
+        return 'select * from information_schema.schemadata where (schema_name = ?)';
     }
 
     /**
@@ -19,7 +19,7 @@ class MySqlGrammar extends \Illuminate\Database\Schema\Grammars\MySqlGrammar
      */
     public function compileViewExists()
     {
-        return "select * from information_schema.views where (table_schema = ?) and (table_name = ?)";
+        return 'select * from information_schema.views where (table_schema = ?) and (table_name = ?)';
     }
 
     /**
@@ -29,7 +29,7 @@ class MySqlGrammar extends \Illuminate\Database\Schema\Grammars\MySqlGrammar
      */
     public function compileUserExists()
     {
-        return "select * from mysql.user where (User = ?)";
+        return 'select * from mysql.user where (User = ?)';
     }
 
     /**
@@ -59,11 +59,11 @@ class MySqlGrammar extends \Illuminate\Database\Schema\Grammars\MySqlGrammar
      */
     public function compileGetTable()
     {
-        $sql = "select table_name, engine, table_type";
-        $sql .= " from information_schema.tables";
-        $sql .= " where (table_schema = ?)";
-        $sql .= " and (table_name = ?)";
-        $sql .= " order by table_name desc limit 0, 1";
+        $sql = 'select table_name, engine, table_type';
+        $sql .= ' from information_schema.tables';
+        $sql .= ' where (table_schema = ?)';
+        $sql .= ' and (table_name = ?)';
+        $sql .= ' order by table_name desc limit 0, 1';
 
         return $sql;
     }
@@ -75,10 +75,10 @@ class MySqlGrammar extends \Illuminate\Database\Schema\Grammars\MySqlGrammar
      */
     public function compileGetColumns()
     {
-        $sql = "select table_name, column_name, ordinal_position, is_nullable, data_type, character_maximum_length, column_comment";
-        $sql .= " from information_schema.columns";
-        $sql .= " where (table_schema = ?) and (table_name = ?)";
-        $sql .= " order by ordinal_position";
+        $sql = 'select table_name, column_name, ordinal_position, is_nullable, data_type, character_maximum_length, column_comment';
+        $sql .= ' from information_schema.columns';
+        $sql .= ' where (table_schema = ?) and (table_name = ?)';
+        $sql .= ' order by ordinal_position';
 
         return $sql;
     }
@@ -90,7 +90,7 @@ class MySqlGrammar extends \Illuminate\Database\Schema\Grammars\MySqlGrammar
      */
     public function compileCreateView($name, $sql)
     {
-        return "create view " . $name . " as " . $sql;
+        return 'create view ' . $name . ' as ' . $sql;
     }
 
     /**
@@ -100,7 +100,7 @@ class MySqlGrammar extends \Illuminate\Database\Schema\Grammars\MySqlGrammar
      */
     public function compileDropView($name)
     {
-        return "drop view " . $name;
+        return 'drop view ' . $name;
     }
 
     /**
@@ -110,8 +110,8 @@ class MySqlGrammar extends \Illuminate\Database\Schema\Grammars\MySqlGrammar
      */
     public function compileSelectViewTenant($columns, $table, $column_tenant)
     {
-        $sql = "select " . $columns . " from " . $table;
-        $sql .= " where (" . $column_tenant . " = substring_index(user(), '@', 1))";
+        $sql = 'select ' . $columns . ' from ' . $table;
+        $sql .= ' where (' . $column_tenant . " = substring_index(user(), '@', 1))";
 
         return $sql;
     }
@@ -128,9 +128,9 @@ class MySqlGrammar extends \Illuminate\Database\Schema\Grammars\MySqlGrammar
         $trigger = sprintf('%s_tg', $table);
         $table = sprintf('%s_tb', $table);
 
-        $sql = "create trigger " . $trigger;
-        $sql .= " before insert on " . $table;
-        $sql .= " for each row set new." . $column_tenant . " = if ((new." . $column_tenant . " is null) or (new." . $column_tenant . " = ''), substring_index(user(), '@', 1), new." . $column_tenant . ")";
+        $sql = 'create trigger ' . $trigger;
+        $sql .= ' before insert on ' . $table;
+        $sql .= ' for each row set new.' . $column_tenant . ' = if ((new.' . $column_tenant . ' is null) or (new.' . $column_tenant . " = ''), substring_index(user(), '@', 1), new." . $column_tenant . ')';
 
         return $sql;
     }

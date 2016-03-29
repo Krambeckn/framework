@@ -26,6 +26,7 @@ class ForeignKey
     public static function isAssociation($name)
     {
         $sufix = sprintf('%s_%s', $name, Table::keyAttr());
+
         return preg_match('/\\A([a-zA-Z0-9_]+)' . $sufix . '\\z/', $name);
     }
 }
