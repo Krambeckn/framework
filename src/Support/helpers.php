@@ -1,6 +1,6 @@
 <?php
 
-if (!function_exists('error')) {
+if (! function_exists('error')) {
     /**
      * Create exception mult-language and with params.
      *

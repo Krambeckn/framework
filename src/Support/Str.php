@@ -12,8 +12,7 @@ class Str extends \Illuminate\Support\Str
      */
     public static function getStartsWith($haystack, $needles)
     {
-        foreach ((array)$needles as $needle)
-        {
+        foreach ((array)$needles as $needle) {
             if ($needle != '' && strpos($haystack, $needle) === 0) {
                 return $needle;
             }
@@ -33,9 +32,8 @@ class Str extends \Illuminate\Support\Str
     public static function format($value, $format)
     {
         // Verificar se value eh um array
-        if (is_array($value))
-        {
-            return array_map(function($val) use ($format) {
+        if (is_array($value)) {
+            return array_map(function ($val) use ($format) {
                 return sprintf($format, $val);
             }, $value);
         }
@@ -51,8 +49,7 @@ class Str extends \Illuminate\Support\Str
      */
     public static function values($mask, array $values)
     {
-        foreach ($values as $k => $v)
-        {
+        foreach ($values as $k => $v) {
             $mask = str_replace('{' . $k . '}', $v, $mask);
         }
 
@@ -69,7 +66,7 @@ class Str extends \Illuminate\Support\Str
     public static function before($str)
     {
         $str = str_replace('\\', '/', $str);
-        $i   = strrpos($str, '/');
+        $i = strrpos($str, '/');
         if ($i === false) {
             return $str;
         }
@@ -87,7 +84,7 @@ class Str extends \Illuminate\Support\Str
     public static function last($str)
     {
         $str = str_replace('\\', '/', $str);
-        $i   = strrpos($str, '/');
+        $i = strrpos($str, '/');
         if ($i === false) {
             return $str;
         }

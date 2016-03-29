@@ -17,7 +17,7 @@ class Num
             return 0;
         }
 
-        return (round($part * 100.00 / $total, $round));
+        return round($part * 100.00 / $total, $round);
     }
 
     /**
@@ -31,7 +31,7 @@ class Num
      */
     public static function percent($total, $perc, $round = 2)
     {
-        return (round($total * $perc / 100, $round));
+        return round($total * $perc / 100, $round);
     }
 
     /**
