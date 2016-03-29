@@ -6,8 +6,8 @@ class Rest
 {
     protected $method = '';
     protected $url = '';
-    protected $params = array();
-    protected $header = array();
+    protected $params = [];
+    protected $header = [];
     public $sendcookie = true;
 
     public function __construct()
@@ -33,6 +33,7 @@ class Rest
             foreach ($name as $n => $v) {
                 $this->with($n, $v);
             }
+
             return $this;
         }
 
@@ -166,7 +167,7 @@ class Rest
         $url = $this->url;
 
         // Make headers
-        $headers = array();
+        $headers = [];
         foreach ($this->header as $hk => $hv) {
             $headers[] = sprintf('%s: %s', $hk, $hv);
         }
@@ -251,19 +252,20 @@ class Rest
     {
         $this->method = '';
         $this->url = '';
-        $this->params = array();
-        $this->header = array();
+        $this->params = [];
+        $this->header = [];
         $this->accept('application/json');
     }
 
     /**
      * Call and return JSON object.
      *
-     * @return Object
+     * @return object
      */
     public function json()
     {
         $this->accept('json');
+
         return $this->call();
     }
 
@@ -275,6 +277,7 @@ class Rest
     public function xml()
     {
         $this->accept('xml');
+
         return $this->call();
     }
 
@@ -286,6 +289,7 @@ class Rest
     public function html()
     {
         $this->accept('html');
+
         return $this->call();
     }
 

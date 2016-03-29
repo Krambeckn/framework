@@ -51,9 +51,9 @@ class Response
     /**
      * Make response by http response and content type.
      *
-     * @return mixed|\SimpleXMLElement
-     *
      * @throws \Exception
+     *
+     * @return mixed|\SimpleXMLElement
      */
     public function make()
     {
@@ -75,6 +75,7 @@ class Response
                     $code = isset($ret->error->code) ? $ret->error->code : 0;
                     error($message, $code);
                 }
+
                 return $ret;
                 break;
 
@@ -87,10 +88,11 @@ class Response
                     $code = isset($ret->error->code) ? $ret->error->code : 0;
                     error($message, $code);
                 }
+
                 return $ret;
                 break;
 
-            default :
+            default:
                 return $this->body;
                 break;
         }
