@@ -5,21 +5,22 @@ class ExceptionAttributes extends \Exception
     protected $attrs = [];
 
     /**
-     * Criar excessao
+     * Criar excessao.
      *
      * @param string $message
      * @param int $code
      * @param array $attrs
      * @param \Exception $previous
      */
-    public function __construct($message = "", $code = 0, array $attrs = [], \Exception $previous = null)
+    public function __construct($message = '', $code = 0, array $attrs = [], \Exception $previous = null)
     {
         $this->attrs = $attrs;
         parent::__construct($message, $code, $previous);
     }
 
     /**
-     * Retorna as mensagens dos atributos
+     * Retorna as mensagens dos atributos.
+     *
      * @return array
      */
     public function getAttrs()
@@ -30,8 +31,9 @@ class ExceptionAttributes extends \Exception
     public function toMessageStr()
     {
         $lines = [];
-        foreach ($this->attrs as $attr => $msgs)
-            $lines[] = sprintf("%s: %s\r\n", $attr, implode(". ", $msgs));
+        foreach ($this->attrs as $attr => $msgs) {
+            $lines[] = sprintf("%s: %s\r\n", $attr, implode('. ', $msgs));
+        }
 
         return sprintf("%s\r\n%s", $this->getMessage(), implode("\r\n", $lines));
     }

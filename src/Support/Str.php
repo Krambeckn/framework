@@ -7,22 +7,27 @@ class Str extends \Illuminate\Support\Str
      *
      * @param  string $haystack
      * @param  string|array $needles
+     *
      * @return false | needle
      */
     public static function getStartsWith($haystack, $needles)
     {
         foreach ((array)$needles as $needle)
         {
-            if ($needle != '' && strpos($haystack, $needle) === 0)
+            if ($needle != '' && strpos($haystack, $needle) === 0) {
                 return $needle;
+            }
         }
+
         return false;
     }
 
     /**
-     * Aplica um formato ao valor ou nos valores de um array
+     * Aplica um formato ao valor ou nos valores de um array.
+     *
      * @param $value
      * @param $format
+     *
      * @return array|string
      */
     public static function format($value, $format)
@@ -39,7 +44,8 @@ class Str extends \Illuminate\Support\Str
     }
 
     /**
-     * Traduz os parâmetros pelos valores de $values
+     * Traduz os parâmetros pelos valores de $values.
+     *
      * @param $mask
      * @param $values
      */
@@ -49,34 +55,43 @@ class Str extends \Illuminate\Support\Str
         {
             $mask = str_replace('{' . $k . '}', $v, $mask);
         }
+
         return $mask;
     }
 
     /**
-     * Retorna a string antes da ultima /
+     * Retorna a string antes da ultima /.
+     *
      * @param $str
+     *
      * @return mixed|string
      */
     public static function before($str)
     {
         $str = str_replace('\\', '/', $str);
         $i   = strrpos($str, '/');
-        if ($i === false)
+        if ($i === false) {
             return $str;
+        }
+
         return substr($str, 0, $i);
     }
 
     /**
-     * Retorna a string depois da ultima /
+     * Retorna a string depois da ultima /.
+     *
      * @param $str
+     *
      * @return mixed|string
      */
     public static function last($str)
     {
         $str = str_replace('\\', '/', $str);
         $i   = strrpos($str, '/');
-        if ($i === false)
+        if ($i === false) {
             return $str;
+        }
+
         return substr($str, ($i + 1));
     }
 }

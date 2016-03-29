@@ -53,7 +53,6 @@ class CSV extends \Illuminate\Support\Collection
         fclose($hnd);
     }
 
-
     /**
      * Preparar linha CSV.
      *

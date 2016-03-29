@@ -8,7 +8,7 @@ trait Properties
     /**
      * @var array
      */
-    protected $properties  = [];
+    protected $properties = [];
 
     /**
      * @var array
@@ -21,8 +21,10 @@ trait Properties
     protected $dateFormat = 'Y-m-d H:i:s';
 
     /**
-     * Verificar se propriedade foi implementada
+     * Verificar se propriedade foi implementada.
+     *
      * @param $name
+     *
      * @return mixed
      */
     public function __get($name)
@@ -31,7 +33,8 @@ trait Properties
     }
 
     /**
-     * Setar propriedade
+     * Setar propriedade.
+     *
      * @param $name
      * @param $value
      */
@@ -40,8 +43,7 @@ trait Properties
         $method_name = 'set' . studly_case($name) . 'Attribute';
 
         // Verificar metodo
-        if (method_exists($this, $method_name))
-        {
+        if (method_exists($this, $method_name)) {
             call_user_func_array([$this, $method_name], [$name, $value]);
         } else {
             $this->properties[$name] = $value;
@@ -54,28 +56,31 @@ trait Properties
 
         // Verificar metodo
         $method_name = 'get' . studly_case($name) . 'Attribute';
-        if (method_exists($this, $method_name))
+        if (method_exists($this, $method_name)) {
             $value = call_user_func_array([$this, $method_name], []);
+        }
 
         // Salvar propriedade
         $this->properties[$name] = $value;
 
         // Cast
-        if (method_exists($this, 'castAttribute') && (array_key_exists($name, $this->casts)))
+        if (method_exists($this, 'castAttribute') && (array_key_exists($name, $this->casts))) {
             $value = $this->castAttribute($name, $value);
+        }
 
         return $value;
     }
 
     public function fromJson($value, $asObject = false)
     {
-        return json_decode($value, ! $asObject);
+        return json_decode($value, !$asObject);
     }
 
     /**
      * Return a timestamp as DateTime object.
      *
-     * @param  mixed  $value
+     * @param  mixed $value
+     *
      * @return \Carbon\Carbon
      */
     protected function asDateTime($value)

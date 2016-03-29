@@ -5,31 +5,32 @@ use Illuminate\Support\Facades\Facade;
 class ServiceProvider extends \Illuminate\Support\ServiceProvider
 {
     /**
-     * Lista de comandos para ser registrado
+     * Lista de comandos para ser registrado.
      * @var array
      */
     protected $commands = [];
 
     /**
-     * Lista de providers
+     * Lista de providers.
      * @var array
      */
     protected $providers = [];
 
     /**
-     * Lista de facades
+     * Lista de facades.
      * @var array
      */
     protected $facades = [];
 
     /**
-     * Lista de provider para trocar instancias
+     * Lista de provider para trocar instancias.
      * @var array
      */
     protected $instances = [];
 
     /**
-     * Create do provider
+     * Create do provider.
+     *
      * @param \Illuminate\Contracts\Foundation\Application $app
      */
     public function __construct($app)
@@ -37,8 +38,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         parent::__construct($app);
 
         // Trocar instancias
-        foreach ($this->instances as $provider => $classServiceProvider)
-        {
+        foreach ($this->instances as $provider => $classServiceProvider) {
             // Limpar facade
             Facade::clearResolvedInstance($provider);
 
@@ -55,18 +55,16 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function register()
     {
         // Registrar providers
-        foreach ($this->providers as $id => $class)
-        {
+        foreach ($this->providers as $id => $class) {
             $app = $this->app;
-            $this->app->singleton($id, function() use ($class, $app) {
+            $this->app->singleton($id, function () use ($class, $app) {
                 return $app->make($class);
             });
         }
 
         // Registrar comandos
-        foreach ($this->commands as $provider => $classCommandProvider)
-        {
-            $this->app->singleton(sprintf('command.%s', $provider), function() use ($classCommandProvider){
+        foreach ($this->commands as $provider => $classCommandProvider) {
+            $this->app->singleton(sprintf('command.%s', $provider), function () use ($classCommandProvider) {
                 return new $classCommandProvider();
             });
         }
@@ -75,13 +73,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
         // Booting
         $this->app->booting(function () {
 
-            if (class_exists('Illuminate\Foundation\AliasLoader'))
-            {
+            if (class_exists('Illuminate\Foundation\AliasLoader')) {
                 $loader = \Illuminate\Foundation\AliasLoader::getInstance();
 
                 // Facdes
-                foreach ($this->facades as $facade_id => $facade_class)
-                {
+                foreach ($this->facades as $facade_id => $facade_class) {
                     $loader->alias($facade_id, $facade_class);
                 }
             }
