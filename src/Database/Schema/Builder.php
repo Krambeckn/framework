@@ -1,6 +1,4 @@
-<?php
-
-namespace NetForceWS\Database\Schema;
+<?php namespace NetForceWS\Database\Schema;
 
 use Closure;
 use Illuminate\Database\Connection;
@@ -27,7 +25,7 @@ class Builder extends \Illuminate\Database\Schema\MySqlBuilder
      *
      * @return \Illuminate\Database\Schema\Blueprint|mixed|Table
      */
-    protected function createBlueprint($table, \Closure $callback = null)
+    protected function createBlueprint($table, Closure $callback = null)
     {
         if (isset($this->resolver))
             return call_user_func($this->resolver, $table, $callback);
@@ -38,7 +36,7 @@ class Builder extends \Illuminate\Database\Schema\MySqlBuilder
     /**
      * Criar tabela.
      */
-    public function create($table, \Closure $callback)
+    public function create($table, Closure $callback)
     {
         $blueprint = $this->createBlueprint($table);
 

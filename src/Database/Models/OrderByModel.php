@@ -1,6 +1,4 @@
-<?php
-
-namespace NetForceWS\Database\Models;
+<?php namespace NetForceWS\Database\Models;
 
 trait OrderByModel
 {

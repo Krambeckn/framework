@@ -118,7 +118,7 @@ class FileModel
      */
     public function get()
     {
-        if (!$this->loaded) {
+        if (! $this->loaded) {
             return false;
         }
 
@@ -136,7 +136,7 @@ class FileModel
      */
     public function set($content)
     {
-        if (!$this->loaded) {
+        if (! $this->loaded) {
             return false;
         }
 
@@ -150,7 +150,7 @@ class FileModel
      */
     public function size()
     {
-        if (!$this->loaded) {
+        if (! $this->loaded) {
             return false;
         }
 
@@ -164,7 +164,7 @@ class FileModel
      */
     public function lastModified()
     {
-        if (!$this->loaded) {
+        if (! $this->loaded) {
             return false;
         }
 
@@ -178,7 +178,7 @@ class FileModel
      */
     public function exists()
     {
-        if (!$this->loaded) {
+        if (! $this->loaded) {
             return false;
         }
 
@@ -192,7 +192,7 @@ class FileModel
      */
     public function extension()
     {
-        if (!$this->loaded) {
+        if (! $this->loaded) {
             return false;
         }
 
@@ -206,7 +206,7 @@ class FileModel
      */
     public function delete()
     {
-        if (!$this->loaded) {
+        if (! $this->loaded) {
             return false;
         }
 

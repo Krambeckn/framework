@@ -1,6 +1,4 @@
-<?php
-
-namespace NetForceWS\Database\Schema\Grammars;
+<?php namespace NetForceWS\Database\Schema\Grammars;
 
 class MySqlGrammar extends \Illuminate\Database\Schema\Grammars\MySqlGrammar
 {

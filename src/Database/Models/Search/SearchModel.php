@@ -1,6 +1,4 @@
-<?php
-
-namespace NetForceWS\Database\Models\Search;
+<?php namespace NetForceWS\Database\Models\Search;
 
 use NetForceWS\Support\Str;
 use Illuminate\Database\Eloquent\Model;

@@ -1,6 +1,4 @@
-<?php
-
-namespace NetForceWS\Database;
+<?php namespace NetForceWS\Database;
 
 class MigrationServiceProvider extends \Illuminate\Support\ServiceProvider
 {

@@ -1,6 +1,4 @@
-<?php
-
-namespace NetForceWS\Database\Schema;
+<?php namespace NetForceWS\Database\Schema;
 
 class ForeignKey
 {

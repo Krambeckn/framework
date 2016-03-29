@@ -1,6 +1,4 @@
-<?php
-
-namespace NetForceWS\Database\Models\Scopes;
+<?php namespace NetForceWS\Database\Models\Scopes;
 
 use NetForceWS\Database\Schema\Table;
 use Illuminate\Database\Eloquent\Model;
@@ -27,8 +25,7 @@ class TenantScope implements \Illuminate\Database\Eloquent\Scope
      */
     public function apply(Builder $builder, Model $model)
     {
-        if (isset($model->multTenant) && ($model->multTenant == true) && ($this->inquilino_id !== null))
-        {
+        if (isset($model->multTenant) && ($model->multTenant == true) && ($this->inquilino_id !== null)) {
             $builder->where(Table::tenantField(), $this->inquilino_id);
         }
     }

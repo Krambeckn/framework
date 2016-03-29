@@ -1,6 +1,4 @@
-<?php
-
-namespace NetForceWS\Database\Models;
+<?php namespace NetForceWS\Database\Models;
 
 use NetForceWS\Database\Models\Relations\FileModel;
 
