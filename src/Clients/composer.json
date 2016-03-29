@@ -1,0 +1,20 @@
+{
+	"name"        : "netforcews/clients",
+	"description" : "The netforcews Clients package.",
+    "homepage"    : "http://netforcews.com",
+	"license"     : "GPL v.3",
+    "authors": [
+        {
+            "name": "Bruno Gonçalves",
+            "email": "bugotech@gmail.com"
+        }
+    ],
+
+	"autoload": {
+        "psr-4": {
+            "NetForceWS\\Clients\\": ""
+        }
+	},
+
+	"minimum-stability": "dev"
+}

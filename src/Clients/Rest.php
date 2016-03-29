@@ -1,12 +1,14 @@
-<?php namespace NetForceWS\Http\Clients;
+<?php
+
+namespace NetForceWS\Clients;
 
 class Rest
 {
-    protected $method     = '';
-    protected $url        = '';
-    protected $params     = array();
-    protected $header     = array();
-    public    $sendcookie = true;
+    protected $method = '';
+    protected $url = '';
+    protected $params = array();
+    protected $header = array();
+    public $sendcookie = true;
 
     public function __construct()
     {
@@ -14,49 +16,58 @@ class Rest
     }
 
     /**
-     * Set param of request
+     * Set param of request.
+     *
      * @param $name
      * @param null $value
+     *
      * @return Rest
      */
     public function with($name, $value = null)
     {
-        if ($name === false)
+        if ($name === false) {
             return $this;
+        }
 
-        if (is_array($name) && is_null($value))
-        {
-            foreach ($name as $n => $v)
+        if (is_array($name) && is_null($value)) {
+            foreach ($name as $n => $v) {
                 $this->with($n, $v);
+            }
             return $this;
         }
 
         $this->params[$name] = $value;
+
         return $this;
     }
 
     /**
-     * Set header of request
+     * Set header of request.
+     *
      * @param $name
      * @param null $value
+     *
      * @return Rest
      */
     public function header($name, $value = null)
     {
-        if (is_array($name) && is_null($value))
-        {
-            foreach ($name as $n => $v)
+        if (is_array($name) && is_null($value)) {
+            foreach ($name as $n => $v) {
                 $this->header($n, $v);
+            }
             return $this;
         }
 
         $this->header[$name] = $value;
+
         return $this;
     }
 
     /**
-     * Set format accept
+     * Set format accept.
+     *
      * @param $format
+     *
      * @return Rest
      */
     public function accept($format)
@@ -65,33 +76,41 @@ class Rest
     }
 
     /**
-     * Set URL request
+     * Set URL request.
+     *
      * @param $url
+     *
      * @return Rest
      */
     public function url($url)
     {
         $this->url = $url;
+
         return $this;
     }
 
     /**
-     * Request METHOD
+     * Request METHOD.
+     *
      * @param $method
      * @param $url
      * @param array $params
+     *
      * @return Rest
      */
     public function method($method, $url, $params = false)
     {
         $this->method = strtoupper($method);
+
         return $this->url($url)->with($params);
     }
 
     /**
-     * Request GET method
+     * Request GET method.
+     *
      * @param $url
      * @param array $params
+     *
      * @return Rest
      */
     public function get($url, $params = false)
@@ -100,9 +119,11 @@ class Rest
     }
 
     /**
-     * Request POST method
+     * Request POST method.
+     *
      * @param $url
      * @param array $params
+     *
      * @return Rest
      */
     public function post($url, $params = false)
@@ -111,9 +132,11 @@ class Rest
     }
 
     /**
-     * Request PUT method
+     * Request PUT method.
+     *
      * @param $url
      * @param array $params
+     *
      * @return Rest
      */
     public function put($url, $params = false)
@@ -122,8 +145,10 @@ class Rest
     }
 
     /**
-     * Request DELETE method
+     * Request DELETE method.
+     *
      * @param $url
+     *
      * @return Rest
      */
     public function delete($url)
@@ -132,7 +157,7 @@ class Rest
     }
 
     /**
-     * Execute request CURL
+     * Execute request CURL.
      */
     protected function call()
     {
@@ -142,40 +167,40 @@ class Rest
 
         // Make headers
         $headers = array();
-        foreach ($this->header as $hk => $hv)
+        foreach ($this->header as $hk => $hv) {
             $headers[] = sprintf('%s: %s', $hk, $hv);
+        }
 
         // Options request cURL
-        $opts                         = array();
-        $opts[CURLOPT_RETURNTRANSFER] = true;     // Hide return
-        $opts[CURLOPT_AUTOREFERER]    = true;     // Follow redirects
-        $opts[CURLOPT_FOLLOWLOCATION] = true;     // Follow redirects too
-        $opts[CURLOPT_HEADER]         = false;    // Extract headers
-        $opts[CURLOPT_SSL_VERIFYPEER] = true;     // This make sure it fail on SSL CA
-        $opts[CURLOPT_HTTPHEADER]     = $headers; // Headers
+        $opts = [];
+        $opts[CURLOPT_RETURNTRANSFER] = true; // Hide return
+        $opts[CURLOPT_AUTOREFERER] = true; // Follow redirects
+        $opts[CURLOPT_FOLLOWLOCATION] = true; // Follow redirects too
+        $opts[CURLOPT_HEADER] = false; // Extract headers
+        $opts[CURLOPT_SSL_VERIFYPEER] = true; // This make sure it fail on SSL CA
+        $opts[CURLOPT_HTTPHEADER] = $headers; // Headers
 
         // Send cookies
-        if ($this->sendcookie)
-        {
+        if ($this->sendcookie) {
             // remove XDEBUG_SESSION
             $cookie = $_COOKIE;
-            if (array_key_exists('XDEBUG_SESSION', $cookie))
+            if (array_key_exists('XDEBUG_SESSION', $cookie)) {
                 unset($cookie['XDEBUG_SESSION']);
+            }
             $opts[CURLOPT_COOKIE] = http_build_query($cookie, null, ';');
         }
 
         // Method
-        switch ($this->method)
-        {
+        switch ($this->method) {
             case 'POST':
-                $opts[CURLOPT_POST]       = true;
+                $opts[CURLOPT_POST] = true;
                 $opts[CURLOPT_POSTFIELDS] = $this->params;
-                $opts[CURLOPT_URL]        = $url;
+                $opts[CURLOPT_URL] = $url;
                 break;
 
             case 'GET':
                 $opts[CURLOPT_HTTPGET] = true;
-                $opts[CURLOPT_URL]     = url($url, $this->params);
+                $opts[CURLOPT_URL] = url($url, $this->params);
                 break;
 
             case 'PUT':
@@ -185,7 +210,7 @@ class Rest
 
             case 'DELETE':
                 $opts[CURLOPT_CUSTOMREQUEST] = 'DELETE';
-                $opts[CURLOPT_URL]           = $url;
+                $opts[CURLOPT_URL] = $url;
                 break;
 
             case '':
@@ -203,8 +228,7 @@ class Rest
         $resp_body = curl_exec($cr);
 
         // Has error request
-        if (curl_errno($cr))
-        {
+        if (curl_errno($cr)) {
             $e = new \Exception(curl_error($cr), curl_errno($cr));
             curl_close($cr);
             throw $e;
@@ -216,23 +240,25 @@ class Rest
 
         $response = new Response($resp_header, $resp_body, $this->header['Accept']);
         $this->reset();
+
         return $response->make();
     }
 
     /**
-     * Load initialization values
+     * Load initialization values.
      */
     protected function reset()
     {
         $this->method = '';
-        $this->url    = '';
+        $this->url = '';
         $this->params = array();
         $this->header = array();
         $this->accept('application/json');
     }
 
     /**
-     * Call and return JSON object
+     * Call and return JSON object.
+     *
      * @return Object
      */
     public function json()
@@ -242,7 +268,8 @@ class Rest
     }
 
     /**
-     * Call and return XML object
+     * Call and return XML object.
+     *
      * @return \SimpleXMLElement
      */
     public function xml()
@@ -252,7 +279,8 @@ class Rest
     }
 
     /**
-     * Call and return string HTML
+     * Call and return string HTML.
+     *
      * @return string
      */
     public function html()
@@ -262,7 +290,8 @@ class Rest
     }
 
     /**
-     * Alias para HTML
+     * Alias para HTML.
+     *
      * @return string
      */
     public function __toString()

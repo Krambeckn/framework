@@ -1,20 +1,23 @@
-<?php namespace NetForceWS\Http\Clients;
+<?php
+
+namespace NetForceWS\Clients;
 
 class Response
 {
-    protected $accept  = '';
+    protected $accept = '';
     protected $headers = null;
-    protected $body    = null;
+    protected $body = null;
 
     public function __construct($headers, $body, $accept)
     {
         $this->headers = $headers;
-        $this->body    = $body;
-        $this->accept  = $accept;
+        $this->body = $body;
+        $this->accept = $accept;
     }
 
     /**
-     * Get HTTP code
+     * Get HTTP code.
+     *
      * @return int
      */
     public function code()
@@ -23,9 +26,11 @@ class Response
     }
 
     /**
-     * Get HTTP header
+     * Get HTTP header.
+     *
      * @param $key
      * @param mixed $default
+     *
      * @return mixed
      */
     public function header($key, $default = null)
@@ -34,7 +39,8 @@ class Response
     }
 
     /**
-     * Get HTTP body content
+     * Get HTTP body content.
+     *
      * @return string
      */
     public function body()
@@ -43,8 +49,10 @@ class Response
     }
 
     /**
-     * Make response by http response and content type
+     * Make response by http response and content type.
+     *
      * @return mixed|\SimpleXMLElement
+     *
      * @throws \Exception
      */
     public function make()
@@ -52,20 +60,19 @@ class Response
         $content_type = $this->accept;
 
         // Get content and charSet
-        if (preg_match('%^([a-zA-Z0-9//\\-]+)(.*?(charset=([a-zA-Z0-9\\-]+)).*?)?$%m', trim($this->headers['content_type']), $parts))
+        if (preg_match('%^([a-zA-Z0-9//\\-]+)(.*?(charset=([a-zA-Z0-9\\-]+)).*?)?$%m', trim($this->headers['content_type']), $parts)) {
             $content_type = (isset($parts[1]) ? $parts[1] : $content_type);
+        }
 
         // Process content
-        switch ($content_type)
-        {
+        switch ($content_type) {
             case 'application/json':
                 $ret = json_decode($this->body);
 
                 // IF error
-                if (isset($ret->error))
-                {
+                if (isset($ret->error)) {
                     $message = isset($ret->error->message) ? $ret->error->message : '';
-                    $code    = isset($ret->error->code)    ? $ret->error->code : 0;
+                    $code = isset($ret->error->code) ? $ret->error->code : 0;
                     error($message, $code);
                 }
                 return $ret;
@@ -75,10 +82,9 @@ class Response
                 $ret = simplexml_load_string($this->body);
 
                 // IF Error
-                if (isset($ret->error))
-                {
+                if (isset($ret->error)) {
                     $message = isset($ret->error->message) ? $ret->error->message : '';
-                    $code    = isset($ret->error->code)    ? $ret->error->code : 0;
+                    $code = isset($ret->error->code) ? $ret->error->code : 0;
                     error($message, $code);
                 }
                 return $ret;
@@ -91,14 +97,18 @@ class Response
     }
 
     /**
-     * Lista de headers padrão conforme mode
+     * Lista de headers padrão conforme mode.
+     *
      * @param $mode
+     *
      * @return array
      */
     public static function defaultHeaders($mode)
     {
-        if ($mode != 'api')
+        if ($mode != 'api') {
             return [];
+        }
+
         return ['Content-Type' => 'application/json; charset=utf-8'];
     }
 }
