@@ -144,6 +144,7 @@ trait ResourceController
     public function show()
     {
         $id = $this->getRouteId();
+
         return $this->getModel($id);
     }
 

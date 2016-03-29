@@ -66,7 +66,7 @@ trait Error
 
     protected function buildErrorResponse(Request $request, $error)
     {
-        if (($request->ajax() && !$request->pjax()) || $request->wantsJson()) {
+        if (($request->ajax() && ! $request->pjax()) || $request->wantsJson()) {
             return new JsonResponse($error, 422);
         }
 
