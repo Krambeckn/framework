@@ -33,12 +33,13 @@ class IndexReturn
     public function __construct(Request $request, $query, $context)
     {
         $this->request = $request;
-        $this->query   = $query;
+        $this->query = $query;
         $this->context = $context;
     }
 
     /**
-     * Retorna a DATA pela Query
+     * Retorna a DATA pela Query.
+     *
      * @return array
      */
     public function data()
@@ -50,14 +51,14 @@ class IndexReturn
     }
 
     /**
-     * Retorna para o Response
+     * Retorna para o Response.
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function toReponse()
     {
         // Com contexto
-        if ($this->request->get('view') == 'full')
-        {
+        if ($this->request->get('view') == 'full') {
             return \Response::json($this->toObject());
         }
 
@@ -66,13 +67,14 @@ class IndexReturn
     }
 
     /**
-     * Retorna em formato de objeto
+     * Retorna em formato de objeto.
+     *
      * @return \stdClass
      */
     public function toObject()
     {
-        $ret          = new \stdClass();
-        $ret->data    = $this->data();
+        $ret = new \stdClass();
+        $ret->data = $this->data();
         $ret->context = $this->context;
 
         return $ret;

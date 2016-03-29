@@ -20,28 +20,28 @@ trait ResourceController
     /**
      * @var Model
      */
-    public $model       = '';
+    public $model = '';
 
     /**
-     * Lista de campos para ordenacao padrao, quando nao fo informando o order
+     * Lista de campos para ordenacao padrao, quando nao fo informando o order.
      * @var string
      */
     public $defaultSort = '';
 
     /**
-     * Campos utilizados para o search
+     * Campos utilizados para o search.
      * @var array
      */
-    public $searches    = [];
+    public $searches = [];
 
     /**
-     * Lista de campos de referencia com a rota
+     * Lista de campos de referencia com a rota.
      * @var array
      */
-    public $references  = [];
+    public $references = [];
 
     /**
-     * Lista de filtros de contexto
+     * Lista de filtros de contexto.
      * @var array
      */
     protected $wheres = [];
@@ -49,7 +49,7 @@ trait ResourceController
     /**
      * @var bool
      */
-    public $validatesStore  = false;
+    public $validatesStore = false;
 
     /**
      * @var bool
@@ -62,7 +62,7 @@ trait ResourceController
     public $messageModelNotFound = 'Registro não foi encontrado';
 
     /**
-     * Preparar estrutura
+     * Preparar estrutura.
      */
     public function prepare()
     {
@@ -74,7 +74,7 @@ trait ResourceController
     }
 
     /**
-     * Carregar lista
+     * Carregar lista.
      */
     public function getList()
     {
@@ -82,7 +82,7 @@ trait ResourceController
 
         // Preparar queries
         $qcount = $this->model->newQuery()->select(DB::raw('count(*) recs'));
-        $query  = $this->model->newQuery();
+        $query = $this->model->newQuery();
 
         // Atribuir alias da tabela principal com A
         /*
@@ -99,10 +99,9 @@ trait ResourceController
         $this->applyWhereContext($qcount);
 
         // Filtros (Query e Count)
-        if ($context->searchQuery != '')
-        {
+        if ($context->searchQuery != '') {
             $search = new SearchModel($this->model, $this->searches);
-            $items  = $search->execute($context->searchQuery);
+            $items = $search->execute($context->searchQuery);
             $search->applyQuery($query, $items);
             $search->applyQuery($qcount, $items);
         }
@@ -112,8 +111,7 @@ trait ResourceController
 
         // Ordenação
         $context->defaultSort = $this->defaultSort;
-        foreach ($context->sorts as $sort)
-        {
+        foreach ($context->sorts as $sort) {
             $query->orderBy($sort->column, $sort->dir);
         }
 
@@ -125,7 +123,7 @@ trait ResourceController
     }
 
     /**
-     * GET / Listar
+     * GET / Listar.
      */
     public function index()
     {
@@ -133,7 +131,7 @@ trait ResourceController
     }
 
     /**
-     * Form Create
+     * Form Create.
      */
     public function create()
     {
@@ -141,7 +139,7 @@ trait ResourceController
     }
 
     /**
-     * Form Exibir
+     * Form Exibir.
      */
     public function show()
     {
@@ -150,18 +148,18 @@ trait ResourceController
     }
 
     /**
-     * POST: Store|Create /
+     * POST: Store|Create /.
      */
     public function store()
     {
-        return DB::transaction(function() {
+        return DB::transaction(function () {
 
             // Criar serviço
             $service = $this->getService();
 
             // Carregar Regras
-            $rules  = ($this->validatesStore === false) ? $this->validatesUpdate : $this->validatesStore;
-            $rules  = (is_array($rules) ? $rules : $this->model->validates);
+            $rules = ($this->validatesStore === false) ? $this->validatesUpdate : $this->validatesStore;
+            $rules = (is_array($rules) ? $rules : $this->model->validates);
             $params = ['table' => $this->model->getTable()];
             $service->validate($this->request->all(), $rules, $params, $this->references);
 
@@ -173,11 +171,11 @@ trait ResourceController
     }
 
     /**
-     * POST: Update|Edit /{id}
+     * POST: Update|Edit /{id}.
      */
     public function update()
     {
-        return DB::transaction(function() {
+        return DB::transaction(function () {
 
             // Carregar ID
             $id = $this->getRouteId();
@@ -189,9 +187,9 @@ trait ResourceController
             $service = $this->getService();
 
             // Validar
-            $data   = array_merge([], $this->model->getAttributes(), $this->request->all());
-            $rules  = $this->validatesUpdate;
-            $rules  = (is_array($rules) ? $rules : $this->model->validates);
+            $data = array_merge([], $this->model->getAttributes(), $this->request->all());
+            $rules = $this->validatesUpdate;
+            $rules = (is_array($rules) ? $rules : $this->model->validates);
             $params = ['table' => $this->model->getTable(), 'id' => $id];
             $service->validate($data, $rules, $params, $this->references);
 
@@ -203,33 +201,34 @@ trait ResourceController
     }
 
     /**
-     * POST: Command /{id}/{comand}
+     * POST: Command /{id}/{comand}.
      */
     public function command()
     {
-        return DB::transaction(function() {
+        return DB::transaction(function () {
 
             // Carregar parametros
-            $id      = $this->getRouteId();
+            $id = $this->getRouteId();
             $command = Route::input('command');
 
             // Carregar model
             $this->model = $this->getModel($id);
 
             $method = 'command' . Str::studly($command);
-            if (method_exists($this, $method) != true)
+            if (method_exists($this, $method) != true) {
                 error('Comando %s não foi implementado', $command);
+            }
 
             return call_user_func_array([$this, $method], [$id]);
         });
     }
 
     /**
-     * DELETE: Excluir /{ids}
+     * DELETE: Excluir /{ids}.
      */
     public function delete()
     {
-        return DB::transaction(function() {
+        return DB::transaction(function () {
 
             // Carregar IDs
             $ids = explode(',', Route::input('ids'));
@@ -237,12 +236,10 @@ trait ResourceController
             // Criar serviço
             $service = $this->getService();
 
-            foreach ($ids as $id)
-            {
+            foreach ($ids as $id) {
                 // Carregar model
                 $model = $this->model->find($id);
-                if ($model !== null)
-                {
+                if ($model !== null) {
                     // Executar
                     $service->delete($model, $this->request);
                 }
@@ -253,8 +250,10 @@ trait ResourceController
     }
 
     /**
-     * Carregar um registro
+     * Carregar um registro.
+     *
      * @param $id
+     *
      * @return mixed
      */
     public function getModel($id)
@@ -269,36 +268,39 @@ trait ResourceController
         $ret = $query->first();
 
         //$ret = $this->model->find($id);
-        if (is_null($ret))
+        if (is_null($ret)) {
             error($this->messageModelNotFound);
+        }
 
         $this->model = $ret;
+
         return $ret;
     }
 
     /**
-     * Aplicar na Query os filtros de contexto
+     * Aplicar na Query os filtros de contexto.
+     *
      * @param $query
      */
     protected function applyWhereContext($query)
     {
         // Filtros de contexto
-        if (count($this->wheres) > 0)
+        if (count($this->wheres) > 0) {
             $query->where($this->wheres);
+        }
 
         // Filtros de referencia
-        foreach ($this->references as $ref_campo => $ref_name)
-        {
+        foreach ($this->references as $ref_campo => $ref_name) {
             $id = Route::input($ref_name);
-            if ($id !== null)
-            {
+            if ($id !== null) {
                 $query->where($ref_campo, $id);
             }
         }
     }
 
     /**
-     * Retorna o ID pela rota
+     * Retorna o ID pela rota.
+     *
      * @return integer
      */
     public function getRouteId()
@@ -315,17 +317,20 @@ trait ResourceController
     }
 
     /**
-     * Adicona um where de contexto
+     * Adicona um where de contexto.
+     *
      * @param $column
      * @param null $operator
      * @param null $value
      * @param string $boolean
+     *
      * @return $this
      */
     protected function where($column, $operator = null, $value = null)
     {
-        if (func_num_args() == 2)
+        if (func_num_args() == 2) {
             list($value, $operator) = [$operator, '='];
+        }
 
         $this->wheres[] = compact('column', 'operator', 'value');
 

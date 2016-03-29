@@ -5,7 +5,7 @@ use NetForceWS\Support\Num;
 class NumTest extends TestCase
 {
     /**
-     * Descorbir o percentual
+     * Descorbir o percentual.
      */
     public function testPercentage()
     {
@@ -20,7 +20,7 @@ class NumTest extends TestCase
     }
 
     /**
-     * Descobrir a parte
+     * Descobrir a parte.
      */
     public function testPercent()
     {
@@ -31,6 +31,9 @@ class NumTest extends TestCase
         $this->assertEquals(841.98, $val);
     }
 
+    /**
+     * Testar formatacao.
+     */
     public function testFormat()
     {
         $str = Num::format(1234.334, 2);
@@ -43,6 +46,9 @@ class NumTest extends TestCase
         $this->assertEquals('1.234,336', $str);
     }
 
+    /**
+     * Testar transformacao de str para value
+     */
     public function testValue()
     {
         $val = Num::value('1234,877', 2);
