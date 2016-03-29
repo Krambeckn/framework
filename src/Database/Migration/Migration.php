@@ -1,6 +1,4 @@
-<?php
-
-namespace NetForceWS\Database\Migration;
+<?php namespace NetForceWS\Database\Migration;
 
 class Migration extends \Illuminate\Database\Migrations\Migration
 {

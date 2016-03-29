@@ -1,6 +1,4 @@
-<?php
-
-namespace NetForceWS\Database\Migration;
+<?php namespace NetForceWS\Database\Migration;
 
 class MigrateMakeCommand extends \Illuminate\Database\Console\Migrations\MigrateMakeCommand
 {

@@ -1,6 +1,4 @@
-<?php
-
-namespace NetForceWS\Database\Facades;
+<?php namespace NetForceWS\Database\Facades;
 
 use NetForceWS\Database\Schema\Builder;
 

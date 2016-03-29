@@ -1,6 +1,4 @@
-<?php
-
-namespace NetForceWS\Clients;
+<?php namespace NetForceWS\Clients;
 
 class Rest
 {

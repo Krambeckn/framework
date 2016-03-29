@@ -1,6 +1,4 @@
-<?php
-
-namespace NetForceWS\Database\Models;
+<?php namespace NetForceWS\Database\Models;
 
 trait FileModel
 {
@@ -35,7 +33,7 @@ trait FileModel
     {
         // verificar se deve autocarregar FileModel quando o attribute não foi informado
         // Isso é não não retornar null quando não tem os attributos
-        if (!(array_key_exists($key, $this->attributes) || $this->hasGetMutator($key))) {
+        if (! (array_key_exists($key, $this->attributes) || $this->hasGetMutator($key))) {
             if (array_key_exists($key, $this->casts) && ($this->casts[$key] == 'file')) {
                 return new \NetForce\Models\Relations\FileModel($this, $key);
             }
