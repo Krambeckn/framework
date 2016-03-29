@@ -32,7 +32,7 @@ class Filesystem extends \Illuminate\Filesystem\Filesystem
     /**
      * Alias of makeDirectory.
      *
-     * @return boolean
+     * @return bool
      */
     public function force($path, $mode = 0777, $recursive = true)
     {
@@ -94,9 +94,9 @@ class Filesystem extends \Illuminate\Filesystem\Filesystem
      * @param $fromPath
      * @param $toPath
      *
-     * @return boolean
+     * @return bool
      */
-    public function synchronize($fromPath, $toPath, $renames = array())
+    public function synchronize($fromPath, $toPath, $renames = [])
     {
         // Verificar se fromPath e um diertorio
         if (! $this->isDirectory($fromPath)) {
@@ -115,7 +115,7 @@ class Filesystem extends \Illuminate\Filesystem\Filesystem
 
             if ($item->isDir()) {
                 $path = $item->getPathname();
-                if (!$this->synchronize($path, $target, $renames)) {
+                if (! $this->synchronize($path, $target, $renames)) {
                     return false;
                 }
             } else {
@@ -129,12 +129,12 @@ class Filesystem extends \Illuminate\Filesystem\Filesystem
                     $hash_file = md5_file($item->getPathname());
                     $hash_dest = md5_file($target);
                     if ($hash_file != $hash_dest) {
-                        if (!$this->copy($item->getPathname(), $target)) {
+                        if (! $this->copy($item->getPathname(), $target)) {
                             return false;
                         }
                     }
                 } else {
-                    if (!$this->copy($item->getPathname(), $target)) {
+                    if (! $this->copy($item->getPathname(), $target)) {
                         return false;
                     }
                 }

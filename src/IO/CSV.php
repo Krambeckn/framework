@@ -34,8 +34,8 @@ class CSV extends \Illuminate\Support\Collection
         }
 
         $this->fileName = $fileName;
-        $this->cols = array();
-        $this->items = array();
+        $this->cols = [];
+        $this->items = [];
 
         // Carregar arquivo
         $hnd = fopen($this->fileName, 'r');
@@ -63,7 +63,7 @@ class CSV extends \Illuminate\Support\Collection
      */
     protected function make_row($data)
     {
-        $line = array();
+        $line = [];
         foreach ($this->cols as $i => $key) {
             $value = (array_key_exists($i, $data) ? $data[$i] : '');
             $value = ($this->utf8 ? utf8_decode($value) : $value);

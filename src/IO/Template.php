@@ -14,7 +14,7 @@ class Template
      *
      * @return $this
      */
-    public function make($template, $outpath, $renames = array())
+    public function make($template, $outpath, $renames = [])
     {
         // Verificar se template existe na lista
         if (\File::exists($template) != true) {
@@ -23,7 +23,7 @@ class Template
 
         $this->outpath = $outpath;
 
-        $renames = array_merge(array('.php.txt' => '.php'), $renames);
+        $renames = array_merge(['.php.txt' => '.php'], $renames);
 
         // Sincronizar arquivos
         \File::synchronize($template, $outpath, $renames);
@@ -45,7 +45,7 @@ class Template
         }
 
         $this->outpath = '';
-        $this->filters = array($target);
+        $this->filters = [$target];
 
         // Criar diretório destino
         $path = \File::path($target);
@@ -63,7 +63,7 @@ class Template
     public function filter($filter)
     {
         if (is_array($filter) != true) {
-            $filter = array($filter);
+            $filter = [$filter];
         }
 
         foreach ($filter as $item) {
