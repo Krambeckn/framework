@@ -9,9 +9,9 @@ class ArrPhpFileTest extends TestCase
     protected function setUp()
     {
         // Gerar array
-        $args            = [];
+        $args = [];
         $args['empresa'] = 'netforce';
-        $args['dono']    = [
+        $args['dono'] = [
             'nome' => 'bruno',
             'site' => 'www.netforce.com.br',
         ];
@@ -26,7 +26,7 @@ class ArrPhpFileTest extends TestCase
     }
 
     /**
-     * verificar se o key empresa foi criado
+     * verificar se o key empresa foi criado.
      */
     public function testTemEmpresa()
     {
@@ -36,7 +36,7 @@ class ArrPhpFileTest extends TestCase
     }
 
     /**
-     * verificar se o key dono foi criado
+     * verificar se o key dono foi criado.
      */
     public function testTemDono()
     {
@@ -45,7 +45,7 @@ class ArrPhpFileTest extends TestCase
     }
 
     /**
-     * verificar se o key dono foi criado
+     * verificar se o key dono foi criado.
      */
     public function testQualDono()
     {

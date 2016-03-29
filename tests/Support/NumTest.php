@@ -47,7 +47,7 @@ class NumTest extends TestCase
     }
 
     /**
-     * Testar transformacao de str para value
+     * Testar transformacao de str para value.
      */
     public function testValue()
     {
