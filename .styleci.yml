@@ -4,3 +4,4 @@ disabled:
  - single_blank_line_at_eof
  - unix_line_endings
  - blank_line_after_opening_tag
+ - no_leading_import_slash
