@@ -44,7 +44,7 @@ class TableInfo
     public function isMultTenant()
     {
         if ($this->multTenant !== null) {
-            return ($this->multTenant == true);
+            return $this->multTenant == true;
         }
 
         return $this->multTenant = $this->builder->hasColumn($this->name, Table::tenantField());

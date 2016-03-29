@@ -86,7 +86,7 @@ class Builder extends \Illuminate\Database\Schema\MySqlBuilder
         $database = $this->connection->getDatabaseName();
         $table = $this->connection->getTablePrefix() . $table;
 
-        if (!($row = $this->connection->selectOne($sql, [$database, $table]))) {
+        if (! ($row = $this->connection->selectOne($sql, [$database, $table]))) {
             return false;
         }
 
