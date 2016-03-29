@@ -5,7 +5,8 @@ use \Storage;
 class IoServiceProvider extends \NetForceWS\Support\ServiceProvider
 {
     /**
-     * Lista de provider para trocar instancias
+     * Lista de provider para trocar instancias.
+     *
      * @var array
      */
     protected $instances = [
@@ -13,15 +14,14 @@ class IoServiceProvider extends \NetForceWS\Support\ServiceProvider
     ];
 
     /**
-     * Boot do Provider
+     * Boot do Provider.
      */
     public function boot()
     {
         parent::boot();
 
         // Storage NetForceWS
-        Storage::extend('ntws', function($app, $config)
-        {
+        Storage::extend('ntws', function ($app, $config) {
             return new \NetForceWS\IO\Storage($app, $config);
         });
     }
