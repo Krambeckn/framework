@@ -10,7 +10,7 @@ class ExceptionTest extends TestCase {
 
         $ex = new ExceptionAttributes("Teste", 2, $attrs);
         $this->assertNotEmpty($ex->getAttrs());
-        $this->assertEquals($attrs, $ex->getAttrs());
+        $this->assertEquals($attrs, $ex->getAttrs());//
 
         $lines   = [];
         $lines[] = "nome: obrigatorio. 6max\r\n";
