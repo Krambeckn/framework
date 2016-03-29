@@ -12,7 +12,7 @@ class Str extends \Illuminate\Support\Str
      */
     public static function getStartsWith($haystack, $needles)
     {
-        foreach ((array)$needles as $needle) {
+        foreach ((array) $needles as $needle) {
             if ($needle != '' && strpos($haystack, $needle) === 0) {
                 return $needle;
             }
