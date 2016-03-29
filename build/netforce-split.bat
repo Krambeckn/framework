@@ -1,3 +1,5 @@
+@echo off
+
 git subsplit.sh init git@github.com:netforcews/framework.git
 git subsplit.sh update
 
