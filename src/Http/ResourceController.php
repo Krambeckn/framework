@@ -289,7 +289,7 @@ trait ResourceController
         if (count($this->wheres) > 0) {
             foreach ($this->wheres as $w) {
                 if ($w['value'] instanceof \Closure) {
-                    $query->whereIn($w);
+                    $query->whereIn($w['column'], $w['value']);
                 } else {
                     $query->where($w);
                 }
