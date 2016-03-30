@@ -39,8 +39,8 @@ abstract class BaseClient
     public function get($path, array $data = [], array $params = [])
     {
         $ps = $this->getParams($params);
-
         $call = $this->rest->get($ps['url'] . $path, $data);
+
         return $this->toFormat($call, $ps['format']);
     }
 
@@ -54,12 +54,15 @@ abstract class BaseClient
      */
     protected function toFormat(Rest $call, $format)
     {
-        switch ($format)
-        {
-            case 'json': return $call->json();
-            case 'xml': return $call->xml();
-            case 'html': return $call->html();
-            default: return error('Formato %s nao implementado', $format);
+        switch ($format) {
+            case 'json':
+                return $call->json();
+            case 'xml':
+                return $call->xml();
+            case 'html':
+                return $call->html();
+            default:
+                return error('Formato %s nao implementado', $format);
         }
     }
 
@@ -71,9 +74,9 @@ abstract class BaseClient
      */
     protected function getParams(array $params)
     {
-        $defaults           = [];
+        $defaults = [];
         $defaults['format'] = Arr::get($this->configs, 'format_default', 'json');
-        $defaults['url']    = Arr::get($this->configs, 'url');
+        $defaults['url'] = Arr::get($this->configs, 'url');
 
         $lista = array_merge([], $defaults, $params);
 
