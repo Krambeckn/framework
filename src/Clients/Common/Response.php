@@ -1,4 +1,4 @@
-<?php namespace NetForceWS\Clients;
+<?php namespace NetForceWS\Clients\Common;
 
 class Response
 {
