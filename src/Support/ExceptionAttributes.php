@@ -2,7 +2,17 @@
 
 class ExceptionAttributes extends \Exception
 {
+    /**
+     * Lista de atributos.
+     * @var array
+     */
     protected $attrs = [];
+
+    /**
+     * Idica de execao ocorreu em um ambiente Console.
+     * @var bool
+     */
+    protected $isConsole = false;
 
     /**
      * Criar excessao.
@@ -15,6 +25,10 @@ class ExceptionAttributes extends \Exception
     public function __construct($message = '', $code = 0, array $attrs = [], \Exception $previous = null)
     {
         $this->attrs = $attrs;
+        $this->isConsole = \App::runningInConsole();
+
+        $message = $this->isConsole ? self::makeMsgs($message, $attrs) : $message;
+
         parent::__construct($message, $code, $previous);
     }
 
@@ -28,13 +42,31 @@ class ExceptionAttributes extends \Exception
         return $this->attrs;
     }
 
+    /**
+     * Retornar a mensagem com as mensagens dos campos se houver.
+     *
+     * @return string
+     */
     public function toMessageStr()
     {
+        return $this->isConsole ? $this->getMessage() : self::makeMsgs($this->getMessage(), $this->getAttrs());
+    }
+
+    /**
+     * Monta a mensagem com os atributos.
+     *
+     * @param $message
+     * @param $attrs
+     *
+     * @return string
+     */
+    protected static function makeMsgs($message, $attrs)
+    {
         $lines = [];
-        foreach ($this->attrs as $attr => $msgs) {
+        foreach ($attrs as $attr => $msgs) {
             $lines[] = sprintf("%s: %s\r\n", $attr, implode('. ', $msgs));
         }
 
-        return sprintf("%s\r\n%s", $this->getMessage(), implode("\r\n", $lines));
+        return sprintf("%s\r\n%s", $message, implode("\r\n", $lines));
     }
 }
