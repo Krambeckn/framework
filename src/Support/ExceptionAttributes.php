@@ -25,7 +25,7 @@ class ExceptionAttributes extends \Exception
     public function __construct($message = '', $code = 0, array $attrs = [], \Exception $previous = null)
     {
         $this->attrs = $attrs;
-        $this->isConsole = \App::runningInConsole();
+        $this->isConsole = app()->runningInConsole();
 
         $message = $this->isConsole ? self::makeMsgs($message, $attrs) : $message;
 
