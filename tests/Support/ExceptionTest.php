@@ -2,8 +2,8 @@
 
 use NetForceWS\Support\ExceptionAttributes;
 
-class ExceptionTest extends TestCase {
-
+class ExceptionTest extends TestCase
+{
     public function testReturnGetAttrs()
     {
         $attrs = ['nome' => ['obrigatorio', '6max'], 'idade' => ['faltou']];
