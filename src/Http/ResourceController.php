@@ -287,7 +287,13 @@ trait ResourceController
     {
         // Filtros de contexto
         if (count($this->wheres) > 0) {
-            $query->where($this->wheres);
+            foreach ($this->wheres as $w) {
+                if ($w['value'] instanceof \Closure) {
+                    $query->whereIn($w);
+                } else {
+                    $query->where($w);
+                }
+            }
         }
 
         // Filtros de referencia
