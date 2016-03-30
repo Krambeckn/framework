@@ -13,7 +13,7 @@ class ExceptionTest extends TestCase
         $this->assertNotEmpty($ex->getAttrs());
         $this->assertEquals($attrs, $ex->getAttrs());
 
-        $lines   = [];
+        $lines = [];
         $lines[] = "nome: obrigatorio. 6max\r\n";
         $lines[] = "idade: faltou\r\n";
         $msg = sprintf("%s\r\n%s", 'Teste', implode("\r\n", $lines));
@@ -23,12 +23,9 @@ class ExceptionTest extends TestCase
 
     public function testContructor()
     {
-        try
-        {
+        try {
             throw new ExceptionAttributes('nome: johann', 0, []);
-        }
-        catch (Exception $e)
-        {
+        } catch (Exception $e) {
             $this->assertEquals(0, $e->getCode());
             $this->assertEquals("nome: johann", $e->getMessage());
         }
