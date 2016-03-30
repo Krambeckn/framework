@@ -9,7 +9,7 @@ class ExceptionTest extends TestCase
     {
         $attrs = ['nome' => ['obrigatorio', '6max'], 'idade' => ['faltou']];
 
-        $ex = new ExceptionAttributes("Teste", 2, $attrs);
+        $ex = new ExceptionAttributes('Teste', 2, $attrs);
         $this->assertNotEmpty($ex->getAttrs());
         $this->assertEquals($attrs, $ex->getAttrs());
 
@@ -27,7 +27,7 @@ class ExceptionTest extends TestCase
             throw new ExceptionAttributes('nome: johann', 0, []);
         } catch (Exception $e) {
             $this->assertEquals(0, $e->getCode());
-            $this->assertEquals("nome: johann", $e->getMessage());
+            $this->assertEquals('nome: johann', $e->getMessage());
         }
     }
 
