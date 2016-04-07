@@ -1,11 +1,9 @@
 <?php
 
-use NetForceWS\Support\Properties;
 use Carbon\Carbon;
 
 class PropertiesTest extends TestCase
 {
-
     protected $proper;
 
     protected function setUp()
@@ -14,7 +12,6 @@ class PropertiesTest extends TestCase
 
         $this->proper = new Propriedades();
     }
-
 
     public function testAttrNome()
     {
@@ -27,7 +24,7 @@ class PropertiesTest extends TestCase
         $obj = new stdClass();
         $obj->nome = 'Teste';
         $this->assertEquals($obj, $this->proper->fromJson('{"nome": "Teste"}', true));
-        $this->assertEquals((array)$obj, $this->proper->fromJson('{"nome": "Teste"}', false));
+        $this->assertEquals((array) $obj, $this->proper->fromJson('{"nome": "Teste"}', false));
     }
 
     public function testAsDateTime()
